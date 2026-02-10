@@ -17,15 +17,11 @@ library(grid)
 library(bslib)
 
 ui <- fluidPage(style = 'margin-left: 10%; margin-right: 10%;',
-                ### Title ###
-                # theme = bslib::bs_theme(bootswatch = "lux"),
-                # shinythemes::themeSelector(),
                 theme = bslib::bs_theme(bootswatch = "cerulean"),
                 helpText(strong("Calculator Version:", style = "font-size:18px;")),
                 textOutput("githubversion"),
                 helpText(br()),
-                # setBackgroundImage(src='background1.png'),
-                
+
                 mainPanel(
                   tabsetPanel(
                     type = "tabs",
@@ -33,12 +29,12 @@ ui <- fluidPage(style = 'margin-left: 10%; margin-right: 10%;',
                              # tags$img(src='swooshgn2.png'),
                              # tags$img(src='gn_swoosh_shellfish3.png'),
                              tags$img(src='white_swoosh_cage_500pxH.png', width = "100%", alt="NOAA branding, NOAA Fisheries Logo, and multiple oysters on and in cage"),
-                             titlePanel(h1("Aquaculture Nutrient Removal Calculator"), windowTitle = "Aquaculture Nutrient Removal Calculator"),
+                             titlePanel(h1("Texas Oyster Nutrient Removal Calculator"), windowTitle = "Texas Oyster Nutrient Removal Calculator"),
                              helpText(br()),
                              
                              ### add text box with black border ### #5761C0  style = "border-style: solid; border-color: #C6E6F0#5EB6D9; background-color: #5EB6D9;",
                              div( style = "border-style: solid; border-radius: 5px; border-color: #0085CA; background-color: #0085CA;",
-                                  p("This calculator predicts the amount of nitrogen and phosphorus farmed eastern oysters remove from the water when harvested, a key environmental benefit that oysters provide. This tool applies to oyster farms located within the geographic range of North Carolina to Maine, USA.", style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px;color: white"),
+                                  p("This calculator predicts the amount of nitrogen and phosphorus farmed eastern oysters remove from the water when harvested, a key environmental benefit that oysters provide. This tool applies to oyster farms located within the state waters of Texas, USA.", style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px;color: white"),
                                   p("To use the tool, please fill in information about your farm in sections 1-2 below.", style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px; color: white"),
                                   p("To download a report, click on ",strong("Download PDF Report")," at the bottom", style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px; color: white")),
                              helpText(br()),
@@ -308,11 +304,11 @@ ui <- fluidPage(style = 'margin-left: 10%; margin-right: 10%;',
                     
                     tabPanel("Reverse Calculator",
                              tags$img(src='white_swoosh_orange_bin_500pxH.png', width = "100%", alt="NOAA branding, NOAA Fisheries Logo, and oysters in orange basket."),
-                             titlePanel(h1("Aquaculture Nutrient Removal Calculator"), windowTitle = "Aquaculture Nutrient Removal Calculator"),
+                             titlePanel(h1("Texas Oyster Nutrient Removal Calculator"), windowTitle = "Texas Oyster Nutrient Removal Calculator"),
                              helpText(br()),
                              ### add text box with black border ### "border-style: solid; border-color: gray; background-color: #838B8B;"
                              div( style = "border-style: solid; border-radius: 5px; border-color: #0085CA; background-color: #0085CA;",
-                                  p("The Reverse Calculator predicts the number of eastern oysters needed to harvest in order to offset a specified nitrogen load at a farm located within the geographic range of North Carolina to Maine, USA.", style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px; color: white;"),
+                                  p("The Reverse Calculator predicts the number of eastern oysters needed to harvest in order to offset a specified nitrogen load at a farm located within the state waters of Texas, USA.", style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px; color: white;"),
                                   p("To use the tool, please enter a nitrogen load and the average size of oyters at harvest.", style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px; color: white;")),
                              # p("To download a report, click on ",strong("Generate PDF Report")," at the bottom", style="text-align:justify; padding-left:10px; padding-right:10px; font-size:15px;")),
                              helpText(br()),
@@ -344,11 +340,11 @@ ui <- fluidPage(style = 'margin-left: 10%; margin-right: 10%;',
                     
                     tabPanel("About", 
                              tags$img(src='white_swoosh_hand_left2_500pxH.png', width = "100%", alt="NOAA branding, NOAA Fisheries Logo, and five oysters being held in palm, with additional oysters in the background."),
-                             titlePanel(h1("Aquaculture Nutrient Removal Calculator"), windowTitle = "Aquaculture Nutrient Removal Calculator"),
+                             titlePanel(h1("Texas Oyster Nutrient Removal Calculator"), windowTitle = "Texas Oyster Nutrient Removal Calculator"),
                              helpText(br()),
                              div( style = "border-style: solid; border-radius: 5px; border-color: #0085CA; background-color: #0085CA;",
                                   p("About the Calculator:", style="text-align:justify; padding-left:10px; padding-right:10px; font-size:20px; color: white;"),
-                                  p("The Aquaculture Nutrient Removal Calculator can be used for new permit applications based on estimated production value, or to provide information on existing farms from actual harvest numbers. The grower provides information on:", style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px; color: white;"),
+                                  p("The Texas Oyster Nutrient Removal Calculator can be used for new permit applications based on estimated production value, or to provide information on existing farms from actual harvest numbers. The grower provides information on:", style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px; color: white;"),
                                   p(strong("- Number of oysters harvested or to be harvested"), style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px; color: white;"),
                                   p(strong("- Size of oysters at harvest"), style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px; color: white;"),
                                   p("- Culture method (floating gear vs. off-bottom gear vs. on-bottom)*", style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px; color: white;"),
@@ -363,7 +359,7 @@ ui <- fluidPage(style = 'margin-left: 10%; margin-right: 10%;',
                                ),
                                tags$img(src='1500x1000-Oyster-Farms-Nutrients-Infographic-NEFSC.png', width = "100%", alt="This illustration shows a landscape in the background with agricultural fields, houses with lawns, and a river washing nutrients from those sources into an underwater scene in the foreground where small dots representing algae flow from the left into a cage stacked with oysters at the center, a farmer in a small boat harvests the oysters, and clear water on the right with a variety of fish represents a healthier habitat with better water quality."),
                                helpText(br()),
-                               helpText(strong("The Aquaculture Nutrient Removal Calculator"), style = "font-size:18px;"),
+                               helpText(strong("The Texas Oyster Nutrient Removal Calculator"), style = "font-size:18px;"),
                                p("The calculator is a tool designed for shellfish growers and resource managers to inform shellfish aquaculture permitting. Resource managers have expressed interest in easy-to-use tools that produce location and operation-appropriate values for the environmental benefits, or ecosystem services, shellfish farms provide. The calculator provides estimated values for nutrient removal in a format that aligns with the shellfish aquaculture permitting process."
                                ),
                                p("The nutrient removal calculations are based on relationships of oyster dry weight-to-length and the average nitrogen and phoshphorous concentrations in oyster shell and tissue. First, we estimate the weight of the oysters based on the typical size of oysters harvested on a farm. The weight estimates are based on non-linear quantile regressions of oyster shell height and dry-weight for both tissue and shell. Next, the nutrient portion of total oyster weight is calculated using the average nitrogen and phosphorus concentration value for both shell and tissue. Adding the tissue and shell nutrients yields the total weight of nitrogen and phosphorus per oyster. This result is scaled to the total number of oysters harvested, as input by the user."
@@ -474,14 +470,14 @@ server <- function(input, output, session) {
   output$githubversion <- renderText({
     releases <- gh("GET /repos/{owner}/{repo}/releases", 
                    owner = "RMORSEcode",
-                   repo = "Calculator")
+                   repo = "TX-Oyster-Calculator")
     releases[[1]][["name"]]
   })
   
   output$mymap <- renderLeaflet({
     leaflet(height="50%") %>%
       addTiles() %>%
-      setView(lng = -70, lat = 40, zoom = 5) %>%
+      setView(lng = -96, lat = 29, zoom = 6) %>%
       addDrawToolbar(
         targetGroup='Selected',
         polylineOptions=FALSE,
@@ -496,7 +492,7 @@ server <- function(input, output, session) {
   output$seedonlymap <- renderLeaflet({
     leaflet(height="50%") %>%
       addTiles() %>%
-      setView(lng = -70, lat = 40, zoom = 5) %>%
+      setView(lng = -96, lat = 29, zoom = 6) %>%
       addDrawToolbar(
         targetGroup='Selected',
         polylineOptions=FALSE,
@@ -511,7 +507,7 @@ server <- function(input, output, session) {
   output$spatmap <- renderLeaflet({
     leaflet(height="50%") %>%
       addTiles() %>%
-      setView(lng = -70, lat = 40, zoom = 5) %>%
+      setView(lng = -96, lat = 29, zoom = 6) %>%
       addDrawToolbar(
         targetGroup='Selected',
         polylineOptions=FALSE,
@@ -584,25 +580,25 @@ server <- function(input, output, session) {
   output$contmap <- renderLeaflet({
     leaflet(height="100%") %>%
       addTiles() %>%
-      setView(lng = -70, lat = 40, zoom = 5) %>%
+      setView(lng = -96, lat = 29, zoom = 6) %>%
       addMarkers(stations$Longitude, stations$Latitude, popup = stations$Waterbody_Name, label =stations$Waterbody_Name )
   })
   
   # table <- reactive({
-  #   taval=1.42E-05
-  #   tbval=2.60727827
-  #   saval=0.00039042
-  #   sbval=2.579747757
+  #   taval=1.03E-04
+  #   tbval=2.117
+  #   saval=1.05e-3
+  #   sbval=2.412
   #   tdw=taval*(input$hsize*25.4)^tbval
   #   sdw=saval*(input$hsize*25.4)^sbval
   #   
   #   #Convert dry weight of tissue and shell (g) to nutrients (g)
   #   tNi=reactiveValues()
   #   sNi=reactiveValues()
-  #   tNi=0.0770*tdw
-  #   sNi=0.0019*sdw
-  #   tPi=0.008345*tdw
-  #   sPi=0.000438*sdw
+  #   tNi=0.0619*tdw
+  #   sNi=0.0018*sdw
+  #   tPi=0.0065*tdw
+  #   sPi=0.0004*sdw
   #   
   #   #convert grams N to lbs or kg
   #   cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
@@ -626,17 +622,17 @@ server <- function(input, output, session) {
   #   df
   # })
   table <- reactive({
-    taval=1.42E-05
-    tbval=2.60727827
-    saval=0.00039042
-    sbval=2.579747757
+    taval=1.03E-04
+    tbval=2.117
+    saval=1.05e-3
+    sbval=2.412
     if(input$seedonly==T){
       tdw=taval*(input$seedSizeOut)^tbval
       sdw=saval*(input$seedSizeOut)^sbval
-      tNi=0.0770*tdw
-      sNi=0.0019*sdw
-      tPi=0.008345*tdw
-      sPi=0.000438*sdw
+      tNi=0.0619*tdw
+      sNi=0.0018*sdw
+      tPi=0.0065*tdw
+      sPi=0.0004*sdw
       #convert grams N to lbs or kg
       cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
       tN=round((tNi*cnvrt*input$seedNum),1)
@@ -655,14 +651,14 @@ server <- function(input, output, session) {
       sdw1=saval*(input$sizeIn)^sbval
       tdw2=taval*(input$sizeOut*25.4)^tbval
       sdw2=saval*(input$sizeOut*25.4)^sbval
-      tNi1=0.0770*tdw1
-      sNi1=0.0019*sdw1
-      tPi1=0.008345*tdw1
-      sPi1=0.000438*sdw1
-      tNi2=0.0770*tdw2
-      sNi2=0.0019*sdw2
-      tPi2=0.008345*tdw2
-      sPi2=0.000438*sdw2
+      tNi1=0.0619*tdw1
+      sNi1=0.0018*sdw1
+      tPi1=0.0065*tdw1
+      sPi1=0.0004*sdw1
+      tNi2=0.0619*tdw2
+      sNi2=0.0018*sdw2
+      tPi2=0.0065*tdw2
+      sPi2=0.0004*sdw2
       #convert grams N to lbs or kg
       cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
       tN1=round((tNi1*cnvrt*input$HNum),1)
@@ -687,17 +683,17 @@ server <- function(input, output, session) {
   })
   # estimate number of oysters required for N load
   esttable <- reactive({
-    taval=1.42E-05
-    tbval=2.60727827
-    saval=0.00039042
-    sbval=2.579747757
+    taval=1.03E-04
+    tbval=2.117
+    saval=1.05e-3
+    sbval=2.412
     tdw=taval*(input$hsize2*25.4)^tbval
     sdw=saval*(input$hsize2*25.4)^sbval
     #Convert dry weight of tissue and shell (g) to nutrients (g)
     tNi=reactiveValues()
     sNi=reactiveValues()
-    tNi=0.0770*tdw
-    sNi=0.0019*sdw
+    tNi=0.0619*tdw
+    sNi=0.0018*sdw
     #convert grams N to lbs
     cnvrt=0.00220462
     # tN=reactiveValues()
@@ -711,20 +707,20 @@ server <- function(input, output, session) {
   })
   
   # Nplot <- reactive({
-  #   taval=1.42E-05
-  #   tbval=2.60727827
-  #   saval=0.00039042
-  #   sbval=2.579747757
+  #   taval=1.03E-04
+  #   tbval=2.117
+  #   saval=1.05e-3
+  #   sbval=2.412
   #   tdw=taval*((input$hsize*25.4)^tbval)
   #   sdw=saval*((input$hsize*25.4)^sbval)
   #   
   #   #Convert dry weight of tissue and shell (g) to nutrients (g)
   #   # tNi=reactiveValues()
   #   # sNi=reactiveValues()
-  #   tNi=(0.0770*tdw)*input$Num
-  #   sNi=(0.0019*sdw)*input$Num
-  #   tPi=(0.008345*tdw)*input$Num
-  #   sPi=(0.000438*sdw)*input$Num
+  #   tNi=(0.0619*tdw)*input$Num
+  #   sNi=(0.0018*sdw)*input$Num
+  #   tPi=(0.0065*tdw)*input$Num
+  #   sPi=(0.0004*sdw)*input$Num
   #   
   #   #convert grams N to lbs or kg
   #   cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
@@ -809,15 +805,15 @@ server <- function(input, output, session) {
   # })
   # 
   # Pplot <- reactive({
-  #   taval=1.42E-05
-  #   tbval=2.60727827
-  #   saval=0.00039042
-  #   sbval=2.579747757
+  #   taval=1.03E-04
+  #   tbval=2.117
+  #   saval=1.05e-3
+  #   sbval=2.412
   #   tdw=taval*((input$hsize*25.4)^tbval)
   #   sdw=saval*((input$hsize*25.4)^sbval)
   #   
-  #   tPi=(0.008345*tdw)*input$Num
-  #   sPi=(0.000438*sdw)*input$Num
+  #   tPi=(0.0065*tdw)*input$Num
+  #   sPi=(0.0004*sdw)*input$Num
   #   
   #   cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
   #   tP=round((tPi*cnvrt),1)
@@ -846,15 +842,15 @@ server <- function(input, output, session) {
   #   P2
   # })
   Nplot <- reactive({
-    taval=1.42E-05
-    tbval=2.60727827
-    saval=0.00039042
-    sbval=2.579747757
+    taval=1.03E-04
+    tbval=2.117
+    saval=1.05e-3
+    sbval=2.412
     if(input$seedonly==T){
       tdw=taval*(input$seedSizeOut)^tbval
       sdw=saval*(input$seedSizeOut)^sbval
-      tNi=0.0770*tdw
-      sNi=0.0019*sdw
+      tNi=0.0619*tdw
+      sNi=0.0018*sdw
       #convert grams N to lbs or kg
       cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
       tN=round((tNi*cnvrt*input$seedNum),1)
@@ -865,10 +861,10 @@ server <- function(input, output, session) {
       sdw1=saval*(input$sizeIn)^sbval
       tdw2=taval*(input$sizeOut*25.4)^tbval
       sdw2=saval*(input$sizeOut*25.4)^sbval
-      tNi1=0.0770*tdw1
-      sNi1=0.0019*sdw1
-      tNi2=0.0770*tdw2
-      sNi2=0.0019*sdw2
+      tNi1=0.0619*tdw1
+      sNi1=0.0018*sdw1
+      tNi2=0.0619*tdw2
+      sNi2=0.0018*sdw2
       #convert grams N to lbs or kg
       cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
       tN1=round((tNi1*cnvrt*input$HNum),1)
@@ -897,15 +893,15 @@ server <- function(input, output, session) {
   })
   
   Pplot <- reactive({
-    taval=1.42E-05
-    tbval=2.60727827
-    saval=0.00039042
-    sbval=2.579747757
+    taval=1.03E-04
+    tbval=2.117
+    saval=1.05e-3
+    sbval=2.412
     if(input$seedonly==T){
       tdw=taval*(input$seedSizeOut)^tbval
       sdw=saval*(input$seedSizeOut)^sbval
-      tPi=0.008345*tdw
-      sPi=0.000438*sdw
+      tPi=0.0065*tdw
+      sPi=0.0004*sdw
       #convert grams N to lbs or kg
       cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
       tP=round((tPi*cnvrt*input$seedNum),1)
@@ -916,10 +912,10 @@ server <- function(input, output, session) {
       sdw1=saval*(input$sizeIn)^sbval
       tdw2=taval*(input$sizeOut*25.4)^tbval
       sdw2=saval*(input$sizeOut*25.4)^sbval
-      tPi1=0.008345*tdw1
-      sPi1=0.000438*sdw1
-      tPi2=0.008345*tdw2
-      sPi2=0.000438*sdw2
+      tPi1=0.0065*tdw1
+      sPi1=0.0004*sdw1
+      tPi2=0.0065*tdw2
+      sPi2=0.0004*sdw2
       #convert grams N to lbs or kg
       cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
       tP1=round((tPi1*cnvrt*input$HNum),1)
@@ -948,28 +944,28 @@ server <- function(input, output, session) {
   })
   # fertilplot <- reactive({
   fertilplot <- function(){
-    # taval=1.42E-05
-    # tbval=2.60727827
-    # saval=0.00039042
-    # sbval=2.579747757
+    # taval=1.03E-04
+    # tbval=2.117
+    # saval=1.05e-3
+    # sbval=2.412
     # tdw=taval*((input$hsize*25.4)^tbval)
     # sdw=saval*((input$hsize*25.4)^sbval)
     # tNi=(0.0796*tdw)*input$Num
-    # sNi=(0.0019*sdw)*input$Num
+    # sNi=(0.0018*sdw)*input$Num
     # cnvrt=0.00220462
     # tN=round((tNi*cnvrt),1)
     # sN=round((sNi*cnvrt),1)
-    taval=1.42E-05
-    tbval=2.60727827
-    saval=0.00039042
-    sbval=2.579747757
+    taval=1.03E-04
+    tbval=2.117
+    saval=1.05e-3
+    sbval=2.412
     
     if(input$seedonly==T){
       tdw=taval*(input$seedSizeOut)^tbval
       sdw=saval*(input$seedSizeOut)^sbval
       
-      tNi=0.0770*tdw
-      sNi=0.0019*sdw
+      tNi=0.0619*tdw
+      sNi=0.0018*sdw
       
       #convert grams N to lbs or kg
       cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
@@ -982,10 +978,10 @@ server <- function(input, output, session) {
       tdw2=taval*(input$sizeOut*25.4)^tbval
       sdw2=saval*(input$sizeOut*25.4)^sbval
       
-      tNi1=0.0770*tdw1
-      sNi1=0.0019*sdw1
-      tNi2=0.0770*tdw2
-      sNi2=0.0019*sdw2
+      tNi1=0.0619*tdw1
+      sNi1=0.0018*sdw1
+      tNi2=0.0619*tdw2
+      sNi2=0.0018*sdw2
       
       #convert grams N to lbs or kg
       cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
@@ -1035,16 +1031,16 @@ server <- function(input, output, session) {
   # dev.off()
   
   infoplot <- function(){
-    taval=1.42E-05
-    tbval=2.60727827
-    saval=0.00039042
-    sbval=2.579747757
+    taval=1.03E-04
+    tbval=2.117
+    saval=1.05e-3
+    sbval=2.412
     if(input$seedonly==T){
       tdw=taval*(input$seedSizeOut)^tbval
       sdw=saval*(input$seedSizeOut)^sbval
       
-      tNi=0.0770*tdw
-      sNi=0.0019*sdw
+      tNi=0.0619*tdw
+      sNi=0.0018*sdw
       
       #convert grams N to lbs or kg
       cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
@@ -1057,10 +1053,10 @@ server <- function(input, output, session) {
       tdw2=taval*(input$sizeOut*25.4)^tbval
       sdw2=saval*(input$sizeOut*25.4)^sbval
       
-      tNi1=0.0770*tdw1
-      sNi1=0.0019*sdw1
-      tNi2=0.0770*tdw2
-      sNi2=0.0019*sdw2
+      tNi1=0.0619*tdw1
+      sNi1=0.0018*sdw1
+      tNi2=0.0619*tdw2
+      sNi2=0.0018*sdw2
       
       #convert grams N to lbs or kg
       cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
