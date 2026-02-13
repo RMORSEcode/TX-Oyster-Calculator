@@ -1,5 +1,7 @@
 ### Open version:
 # https://connect.fisheries.noaa.gov/TX-ANRC/
+### repo
+# C:/Users/ryan.morse/Documents/GitHub/TX-Oyster-Calculator
 
 
 library(shiny)
@@ -21,7 +23,7 @@ ui <- fluidPage(style = 'margin-left: 10%; margin-right: 10%;',
                 helpText(strong("Calculator Version:", style = "font-size:18px;")),
                 textOutput("githubversion"),
                 helpText(br()),
-
+                
                 mainPanel(
                   tabsetPanel(
                     type = "tabs",
@@ -45,7 +47,9 @@ ui <- fluidPage(style = 'margin-left: 10%; margin-right: 10%;',
                              textAreaInput("farmname", div(strong("Project Name:"), " Please enter the name of the oyster farm"),value = "", width="100%", rows=1, placeholder = NULL),
                              helpText(br()),
                              ## Ploidy
-                             selectInput("ploidy", div(strong("Oyster Ploidy:")," Please select the ploidy of the oysters that were harvested", em("(will not affect calculation)")),c("Diploid", "Triploid", "Combination"), width="100%"),
+                             # selectInput("ploidy", div(strong("Oyster Ploidy:")," Please select the ploidy of the oysters that were harvested", em("(will not affect calculation)")),c("Diploid", "Triploid", "Combination"), width="100%"),
+                             selectInput("ploidy", div(strong("Oyster Ploidy:")," Please select the ploidy of the oysters that were harvested"),c("Diploid", "Triploid"), width="100%"),
+                             # selectInput("ploidy", div(strong("Oyster Ploidy:")," Please select the ploidy of the oysters that were harvested", c("Diploid", "Triploid"), width="100%"),
                              helpText(br()),
                              
                              # #####______________________________________
@@ -256,10 +260,6 @@ ui <- fluidPage(style = 'margin-left: 10%; margin-right: 10%;',
                                inline = T,
                                width="100%"),
                              helpText(br()),
-                             # downloadButton(
-                             #   outputId = "downloader",
-                             #   label = "Download PDF Report"
-                             # ),
                              br(),
                              br(),
                              
@@ -269,23 +269,13 @@ ui <- fluidPage(style = 'margin-left: 10%; margin-right: 10%;',
                                            plotOutput("nutbplot2", width="80%")
                                )
                              ),
-                             # plotOutput("nutbplot", width="50%"), 
-                             # helpText(br()),
-                             # plotOutput("nutbplot2", width="50%"), 
-                             # helpText(br()),
                              tableOutput("mytable"),
-                             # renderTable("mytable", rownames = TRUE), 
-                             
-                             # actionButton("go", "Screenshot"),
                              br(),
                              downloadButton(
                                outputId = "downloader",
                                label = "Download PDF Report"
                              ),
                              plotOutput("fertplot", width="75%"),
-                             br(),
-                             # radioButtons("extension", "Save As:",
-                             #              choices = c("png", "svg"), inline = TRUE),
                              downloadButton(
                                outputId = "download",
                                label = "Download Customized Infographic"
@@ -382,32 +372,16 @@ ui <- fluidPage(style = 'margin-left: 10%; margin-right: 10%;',
                              br(),
                              tags$p(
                                h4("Data Contributors:"),
-                               p("ME: Damian Brady and Tom Kiffney - University of Maine; Doug Niven - Mere Point"
-                               ),
-                               p("NH: Ray Grizzle and Krystin Ward - University of New Hampshire; Brian Gennaco - Virgin Oyster Co."
-                               ),
-                               p("MA: Josh Reitsma - Cape Cod Cooperative Extension; Dale Leavitt - Blue Stream Shellfish"
-                               ),
-                               p("RI: Suzy Ayvazian - EPA Narragansett; Matt Griffin - Saltbox Oysters"
-                               ),
-                               p("CT: Skylar Bayer, Matt Poach, Shannon Meseck, and Julie Rose - NOAA Milford"
-                               ),
-                               p("NY: Jeff Levinton and Daria Sebastiano - Stony Brook University"
-                               ),
-                               p("NJ: Daphne Munroe and Janine Barr - Rutgers University"
-                               ),
-                               p("MD: Matt Poach - NOAA Milford; Julie Reichert-Nguyen - NOAA Chesapeake Bay Office; Suzanne Bricker - NOAA Oxford, and Matt Parker - Maryland Sea Grant"
-                               ),
-                               p("VA: Matt Poach - NOAA Milford; Julie Reichert-Nguyen - NOAA Chesapeake Bay Office; Suzanne Bricker - NOAA Oxford, and Matt Parker - Maryland Sea Grant"
-                               ),
-                               p("NC: Beth Darrow and Jessica Kinsella - University of North Carolina Wilmington"
-                               )
+                               p("Texas Sustainable Oysters - Galveston Bay"),
+                               p("Oyster Bros. - Matagorda Bay"),
+                               p("Big Tree Oyster Company - Copano Bay"),
+                               p("Copano Oyster Company - Copano Bay")
                              ),
                              br(),
                              tags$p(
                                h4("Project Team"),
                                tags$a(target="_blank", href="https://www.linkedin.com/in/julie-m-rose/", "Julie Rose,"),
-                               tags$a(target="_blank", href="https://coastalscience.noaa.gov/staff/christopher-schillaci/", "Chris Schillaci,"), #https://www.linkedin.com/in/chris-schillaci/
+                               tags$a(target="_blank", href="https://www.linkedin.com/in/chris-schillaci/", "Chris Schillaci,"),
                                tags$a(target="_blank", href="https://seagrant.uconn.edu/person/zachary-gordon/", "Zach Gordon,"),
                                tags$a(target="_blank", href="https://www.fisheries.noaa.gov/contact/ryan-morse-phd","Ryan Morse"),
                              ),
@@ -629,10 +603,18 @@ server <- function(input, output, session) {
     if(input$seedonly==T){
       tdw=taval*(input$seedSizeOut)^tbval
       sdw=saval*(input$seedSizeOut)^sbval
-      tNi=0.0619*tdw
-      sNi=0.0018*sdw
-      tPi=0.0065*tdw
-      sPi=0.0004*sdw
+      if(input$ploidy=="Diploid"){
+        tNi=0.06935*tdw
+        sNi=0.0017*sdw
+        tPi=0.007459*tdw
+        sPi=0.0003762*sdw
+      }
+      else if(input$ploidy=="Triploid"){
+        tNi=0.05614*tdw
+        sNi=0.00182*sdw
+        tPi=0.005614*tdw
+        sPi=0.0003691*sdw
+      }
       #convert grams N to lbs or kg
       cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
       tN=round((tNi*cnvrt*input$seedNum),1)
@@ -651,14 +633,35 @@ server <- function(input, output, session) {
       sdw1=saval*(input$sizeIn)^sbval
       tdw2=taval*(input$sizeOut*25.4)^tbval
       sdw2=saval*(input$sizeOut*25.4)^sbval
-      tNi1=0.0619*tdw1
-      sNi1=0.0018*sdw1
-      tPi1=0.0065*tdw1
-      sPi1=0.0004*sdw1
-      tNi2=0.0619*tdw2
-      sNi2=0.0018*sdw2
-      tPi2=0.0065*tdw2
-      sPi2=0.0004*sdw2
+      
+      if(input$ploidy=="Diploid"){
+        tNi1=0.06935*tdw1
+        sNi1=0.0017*sdw1
+        tPi1=0.007459*tdw1
+        sPi1=0.0003762*sdw1
+        tNi2=0.06935*tdw2
+        sNi2=0.0017*sdw2
+        tPi2=0.007459*tdw2
+        sPi2=0.0003762*sdw2
+      }
+      else if(input$ploidy=="Triploid"){
+        tNi1=0.05614*tdw1
+        sNi1=0.00182*sdw1
+        tPi1=0.005614*tdw1
+        sPi1=0.0003691*sdw1
+        tNi2=0.05614*tdw2
+        sNi2=0.00182*sdw2
+        tPi2=0.005614*tdw2
+        sPi2=0.0003691*sdw2
+      }
+      # tNi1=0.0619*tdw1
+      # sNi1=0.0018*sdw1
+      # tPi1=0.0065*tdw1
+      # sPi1=0.0004*sdw1
+      # tNi2=0.0619*tdw2
+      # sNi2=0.0018*sdw2
+      # tPi2=0.0065*tdw2
+      # sPi2=0.0004*sdw2
       #convert grams N to lbs or kg
       cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
       tN1=round((tNi1*cnvrt*input$HNum),1)
@@ -692,8 +695,18 @@ server <- function(input, output, session) {
     #Convert dry weight of tissue and shell (g) to nutrients (g)
     tNi=reactiveValues()
     sNi=reactiveValues()
-    tNi=0.0619*tdw
-    sNi=0.0018*sdw
+    # tNi=0.0619*tdw
+    # sNi=0.0018*sdw
+    if(input$ploidy=="Diploid"){
+      tNi=0.06935*tdw
+      sNi=0.0017*sdw
+    }
+    else if(input$ploidy=="Triploid"){
+      tNi=0.05614*tdw
+      sNi=0.00182*sdw
+    }
+    
+    
     #convert grams N to lbs
     cnvrt=0.00220462
     # tN=reactiveValues()
@@ -849,8 +862,16 @@ server <- function(input, output, session) {
     if(input$seedonly==T){
       tdw=taval*(input$seedSizeOut)^tbval
       sdw=saval*(input$seedSizeOut)^sbval
-      tNi=0.0619*tdw
-      sNi=0.0018*sdw
+      # tNi=0.0619*tdw
+      # sNi=0.0018*sdw
+      if(input$ploidy=="Diploid"){
+        tNi=0.06935*tdw
+        sNi=0.0017*sdw
+      }
+      else if(input$ploidy=="Triploid"){
+        tNi=0.05614*tdw
+        sNi=0.00182*sdw
+      }
       #convert grams N to lbs or kg
       cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
       tN=round((tNi*cnvrt*input$seedNum),1)
@@ -861,10 +882,22 @@ server <- function(input, output, session) {
       sdw1=saval*(input$sizeIn)^sbval
       tdw2=taval*(input$sizeOut*25.4)^tbval
       sdw2=saval*(input$sizeOut*25.4)^sbval
-      tNi1=0.0619*tdw1
-      sNi1=0.0018*sdw1
-      tNi2=0.0619*tdw2
-      sNi2=0.0018*sdw2
+      # tNi1=0.0619*tdw1
+      # sNi1=0.0018*sdw1
+      # tNi2=0.0619*tdw2
+      # sNi2=0.0018*sdw2
+      if(input$ploidy=="Diploid"){
+        tNi1=0.06935*tdw1
+        sNi1=0.0017*sdw1
+        tNi2=0.06935*tdw2
+        sNi2=0.0017*sdw2
+      }
+      else if(input$ploidy=="Triploid"){
+        tNi1=0.05614*tdw1
+        sNi1=0.00182*sdw1
+        tNi2=0.06935*tdw2
+        sNi2=0.0017*sdw2
+      }
       #convert grams N to lbs or kg
       cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
       tN1=round((tNi1*cnvrt*input$HNum),1)
@@ -900,8 +933,16 @@ server <- function(input, output, session) {
     if(input$seedonly==T){
       tdw=taval*(input$seedSizeOut)^tbval
       sdw=saval*(input$seedSizeOut)^sbval
-      tPi=0.0065*tdw
-      sPi=0.0004*sdw
+      # tPi=0.0065*tdw
+      # sPi=0.0004*sdw
+      if(input$ploidy=="Diploid"){
+        tPi=0.007459*tdw
+        sPi=0.0003762*sdw
+      }
+      else if(input$ploidy=="Triploid"){
+        tPi=0.005614*tdw
+        sPi=0.0003691*sdw
+      }
       #convert grams N to lbs or kg
       cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
       tP=round((tPi*cnvrt*input$seedNum),1)
@@ -912,10 +953,22 @@ server <- function(input, output, session) {
       sdw1=saval*(input$sizeIn)^sbval
       tdw2=taval*(input$sizeOut*25.4)^tbval
       sdw2=saval*(input$sizeOut*25.4)^sbval
-      tPi1=0.0065*tdw1
-      sPi1=0.0004*sdw1
-      tPi2=0.0065*tdw2
-      sPi2=0.0004*sdw2
+      # tPi1=0.0065*tdw1
+      # sPi1=0.0004*sdw1
+      # tPi2=0.0065*tdw2
+      # sPi2=0.0004*sdw2
+      if(input$ploidy=="Diploid"){
+        tPi1=0.007459*tdw1
+        sPi1=0.0003762*sdw1
+        tPi2=0.007459*tdw2
+        sPi2=0.0003762*sdw2
+      }
+      else if(input$ploidy=="Triploid"){
+        tPi1=0.005614*tdw1
+        sPi1=0.0003691*sdw1
+        tPi2=0.005614*tdw2
+        sPi2=0.0003691*sdw2
+      }
       #convert grams N to lbs or kg
       cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
       tP1=round((tPi1*cnvrt*input$HNum),1)
@@ -964,9 +1017,16 @@ server <- function(input, output, session) {
       tdw=taval*(input$seedSizeOut)^tbval
       sdw=saval*(input$seedSizeOut)^sbval
       
-      tNi=0.0619*tdw
-      sNi=0.0018*sdw
-      
+      # tNi=0.0619*tdw
+      # sNi=0.0018*sdw
+      if(input$ploidy=="Diploid"){
+        tNi=0.06935*tdw
+        sNi=0.0017*sdw
+      }
+      else if(input$ploidy=="Triploid"){
+        tNi=0.05614*tdw
+        sNi=0.00182*sdw
+      }
       #convert grams N to lbs or kg
       cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
       tN=round((tNi*cnvrt*input$seedNum),1)
@@ -978,11 +1038,22 @@ server <- function(input, output, session) {
       tdw2=taval*(input$sizeOut*25.4)^tbval
       sdw2=saval*(input$sizeOut*25.4)^sbval
       
-      tNi1=0.0619*tdw1
-      sNi1=0.0018*sdw1
-      tNi2=0.0619*tdw2
-      sNi2=0.0018*sdw2
-      
+      # tNi1=0.0619*tdw1
+      # sNi1=0.0018*sdw1
+      # tNi2=0.0619*tdw2
+      # sNi2=0.0018*sdw2
+      if(input$ploidy=="Diploid"){
+        tNi1=0.06935*tdw1
+        sNi1=0.0017*sdw1
+        tNi2=0.06935*tdw2
+        sNi2=0.0017*sdw2
+      }
+      else if(input$ploidy=="Triploid"){
+        tNi1=0.05614*tdw1
+        sNi1=0.00182*sdw1
+        tNi2=0.05614*tdw2
+        sNi2=0.00182*sdw2
+      }
       #convert grams N to lbs or kg
       cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
       tN1=round((tNi1*cnvrt*input$HNum),1)
@@ -995,7 +1066,7 @@ server <- function(input, output, session) {
     }
     nBags=round(((sN+tN)/5),0)
     sqftlawns=round((sN+tN),0)*1000
-
+    
     ## add single graphic to Calculator
     #read file
     img1<-readPNG("fertilizerInfographic.png")
@@ -1039,9 +1110,16 @@ server <- function(input, output, session) {
       tdw=taval*(input$seedSizeOut)^tbval
       sdw=saval*(input$seedSizeOut)^sbval
       
-      tNi=0.0619*tdw
-      sNi=0.0018*sdw
-      
+      # tNi=0.0619*tdw
+      # sNi=0.0018*sdw
+      if(input$ploidy=="Diploid"){
+        tNi=0.06935*tdw
+        sNi=0.0017*sdw
+      }
+      else if(input$ploidy=="Triploid"){
+        tNi=0.05614*tdw
+        sNi=0.00182*sdw
+      }
       #convert grams N to lbs or kg
       cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
       tN=round((tNi*cnvrt*input$seedNum),1)
@@ -1053,11 +1131,22 @@ server <- function(input, output, session) {
       tdw2=taval*(input$sizeOut*25.4)^tbval
       sdw2=saval*(input$sizeOut*25.4)^sbval
       
-      tNi1=0.0619*tdw1
-      sNi1=0.0018*sdw1
-      tNi2=0.0619*tdw2
-      sNi2=0.0018*sdw2
-      
+      # tNi1=0.0619*tdw1
+      # sNi1=0.0018*sdw1
+      # tNi2=0.0619*tdw2
+      # sNi2=0.0018*sdw2
+      if(input$ploidy=="Diploid"){
+        tNi1=0.06935*tdw1
+        sNi1=0.0017*sdw1
+        tNi2=0.06935*tdw2
+        sNi2=0.0017*sdw2
+      }
+      else if(input$ploidy=="Triploid"){
+        tNi1=0.05614*tdw1
+        sNi1=0.00182*sdw1
+        tNi2=0.05614*tdw2
+        sNi2=0.00182*sdw2
+      }
       #convert grams N to lbs or kg
       cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
       tN1=round((tNi1*cnvrt*input$HNum),1)
@@ -1068,7 +1157,7 @@ server <- function(input, output, session) {
       sN=sN2-sN1
       tN=tN2-tN1
     }
-
+    
     nBags=round(((sN+tN)/5),0)
     sqftlawns=round((sN+tN),0)*1000
     img2<-readPNG("Oyster-Farms-Nutrients-no-phyto-small.png") # no phyto at all
@@ -1135,7 +1224,7 @@ server <- function(input, output, session) {
     }) 
   
   
-
+  
   
   output$downloader <- 
     downloadHandler(
