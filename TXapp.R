@@ -559,10 +559,10 @@ server <- function(input, output, session) {
   })
   
   # table <- reactive({
-  #   taval=1.03E-04
-  #   tbval=2.117
-  #   saval=1.05e-3
-  #   sbval=2.412
+  #   taval=0.000108
+  #   tbval=2.086
+  #   saval=0.000547
+  #   sbval=2.562
   #   tdw=taval*(input$hsize*25.4)^tbval
   #   sdw=saval*(input$hsize*25.4)^sbval
   #   
@@ -596,23 +596,23 @@ server <- function(input, output, session) {
   #   df
   # })
   table <- reactive({
-    taval=1.03E-04
-    tbval=2.117
-    saval=1.05e-3
-    sbval=2.412
+    taval=0.000108
+    tbval=2.086
+    saval=0.000547
+    sbval=2.562
     if(input$seedonly==T){
       tdw=taval*(input$seedSizeOut)^tbval
       sdw=saval*(input$seedSizeOut)^sbval
       if(input$ploidy=="Diploid"){
         tNi=0.06935*tdw
-        sNi=0.0017*sdw
-        tPi=0.007459*tdw
+        sNi=0.0074*sdw
+        tPi=0.0017*tdw
         sPi=0.0003762*sdw
       }
       else if(input$ploidy=="Triploid"){
         tNi=0.05614*tdw
-        sNi=0.00182*sdw
-        tPi=0.005614*tdw
+        sNi=0.0056*sdw
+        tPi=0.0018*tdw
         sPi=0.0003691*sdw
       }
       #convert grams N to lbs or kg
@@ -636,22 +636,22 @@ server <- function(input, output, session) {
       
       if(input$ploidy=="Diploid"){
         tNi1=0.06935*tdw1
-        sNi1=0.0017*sdw1
-        tPi1=0.007459*tdw1
+        sNi1=0.0074*sdw1
+        tPi1=0.0017*tdw1
         sPi1=0.0003762*sdw1
         tNi2=0.06935*tdw2
-        sNi2=0.0017*sdw2
-        tPi2=0.007459*tdw2
+        sNi2=0.0074*sdw2
+        tPi2=0.017*tdw2
         sPi2=0.0003762*sdw2
       }
       else if(input$ploidy=="Triploid"){
         tNi1=0.05614*tdw1
-        sNi1=0.00182*sdw1
-        tPi1=0.005614*tdw1
+        sNi1=0.0056*sdw1
+        tPi1=0.0018*tdw1
         sPi1=0.0003691*sdw1
         tNi2=0.05614*tdw2
-        sNi2=0.00182*sdw2
-        tPi2=0.005614*tdw2
+        sNi2=0.0056*sdw2
+        tPi2=0.0018*tdw2
         sPi2=0.0003691*sdw2
       }
       # tNi1=0.0619*tdw1
@@ -686,10 +686,10 @@ server <- function(input, output, session) {
   })
   # estimate number of oysters required for N load
   esttable <- reactive({
-    taval=1.03E-04
-    tbval=2.117
-    saval=1.05e-3
-    sbval=2.412
+    taval=0.000108
+    tbval=2.086
+    saval=0.000547
+    sbval=2.562
     tdw=taval*(input$hsize2*25.4)^tbval
     sdw=saval*(input$hsize2*25.4)^sbval
     #Convert dry weight of tissue and shell (g) to nutrients (g)
@@ -699,11 +699,11 @@ server <- function(input, output, session) {
     # sNi=0.0018*sdw
     if(input$ploidy=="Diploid"){
       tNi=0.06935*tdw
-      sNi=0.0017*sdw
+      sNi=0.0074*sdw
     }
     else if(input$ploidy=="Triploid"){
       tNi=0.05614*tdw
-      sNi=0.00182*sdw
+      sNi=0.0056*sdw
     }
     
     
@@ -720,10 +720,10 @@ server <- function(input, output, session) {
   })
   
   # Nplot <- reactive({
-  #   taval=1.03E-04
-  #   tbval=2.117
-  #   saval=1.05e-3
-  #   sbval=2.412
+  #   taval=0.000108
+  #   tbval=2.086
+  #   saval=0.000547
+  #   sbval=2.562
   #   tdw=taval*((input$hsize*25.4)^tbval)
   #   sdw=saval*((input$hsize*25.4)^sbval)
   #   
@@ -818,10 +818,10 @@ server <- function(input, output, session) {
   # })
   # 
   # Pplot <- reactive({
-  #   taval=1.03E-04
-  #   tbval=2.117
-  #   saval=1.05e-3
-  #   sbval=2.412
+  #   taval=0.000108
+  #   tbval=2.086
+  #   saval=0.000547
+  #   sbval=2.562
   #   tdw=taval*((input$hsize*25.4)^tbval)
   #   sdw=saval*((input$hsize*25.4)^sbval)
   #   
@@ -855,10 +855,10 @@ server <- function(input, output, session) {
   #   P2
   # })
   Nplot <- reactive({
-    taval=1.03E-04
-    tbval=2.117
-    saval=1.05e-3
-    sbval=2.412
+    taval=0.000108
+    tbval=2.086
+    saval=0.000547
+    sbval=2.562
     if(input$seedonly==T){
       tdw=taval*(input$seedSizeOut)^tbval
       sdw=saval*(input$seedSizeOut)^sbval
@@ -866,11 +866,11 @@ server <- function(input, output, session) {
       # sNi=0.0018*sdw
       if(input$ploidy=="Diploid"){
         tNi=0.06935*tdw
-        sNi=0.0017*sdw
+        sNi=0.0074*sdw
       }
       else if(input$ploidy=="Triploid"){
         tNi=0.05614*tdw
-        sNi=0.00182*sdw
+        sNi=0.0056*sdw
       }
       #convert grams N to lbs or kg
       cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
@@ -888,15 +888,15 @@ server <- function(input, output, session) {
       # sNi2=0.0018*sdw2
       if(input$ploidy=="Diploid"){
         tNi1=0.06935*tdw1
-        sNi1=0.0017*sdw1
+        sNi1=0.0074*sdw1
         tNi2=0.06935*tdw2
-        sNi2=0.0017*sdw2
+        sNi2=0.0074*sdw2
       }
       else if(input$ploidy=="Triploid"){
         tNi1=0.05614*tdw1
-        sNi1=0.00182*sdw1
-        tNi2=0.06935*tdw2
-        sNi2=0.0017*sdw2
+        sNi1=0.0056*sdw1
+        tNi2=0.05614*tdw2
+        sNi2=0.0056*sdw2
       }
       #convert grams N to lbs or kg
       cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
@@ -926,21 +926,21 @@ server <- function(input, output, session) {
   })
   
   Pplot <- reactive({
-    taval=1.03E-04
-    tbval=2.117
-    saval=1.05e-3
-    sbval=2.412
+    taval=0.000108
+    tbval=2.086
+    saval=0.000547
+    sbval=2.562
     if(input$seedonly==T){
       tdw=taval*(input$seedSizeOut)^tbval
       sdw=saval*(input$seedSizeOut)^sbval
       # tPi=0.0065*tdw
       # sPi=0.0004*sdw
       if(input$ploidy=="Diploid"){
-        tPi=0.007459*tdw
+        tPi=0.0017*tdw
         sPi=0.0003762*sdw
       }
       else if(input$ploidy=="Triploid"){
-        tPi=0.005614*tdw
+        tPi=0.0018*tdw
         sPi=0.0003691*sdw
       }
       #convert grams N to lbs or kg
@@ -958,15 +958,15 @@ server <- function(input, output, session) {
       # tPi2=0.0065*tdw2
       # sPi2=0.0004*sdw2
       if(input$ploidy=="Diploid"){
-        tPi1=0.007459*tdw1
+        tPi1=0.0017*tdw1
         sPi1=0.0003762*sdw1
-        tPi2=0.007459*tdw2
+        tPi2=0.017*tdw2
         sPi2=0.0003762*sdw2
       }
       else if(input$ploidy=="Triploid"){
-        tPi1=0.005614*tdw1
+        tPi1=0.0018*tdw1
         sPi1=0.0003691*sdw1
-        tPi2=0.005614*tdw2
+        tPi2=0.0018*tdw2
         sPi2=0.0003691*sdw2
       }
       #convert grams N to lbs or kg
@@ -997,10 +997,10 @@ server <- function(input, output, session) {
   })
   # fertilplot <- reactive({
   fertilplot <- function(){
-    # taval=1.03E-04
-    # tbval=2.117
-    # saval=1.05e-3
-    # sbval=2.412
+    # taval=0.000108
+    # tbval=2.086
+    # saval=0.000547
+    # sbval=2.562
     # tdw=taval*((input$hsize*25.4)^tbval)
     # sdw=saval*((input$hsize*25.4)^sbval)
     # tNi=(0.0796*tdw)*input$Num
@@ -1008,10 +1008,10 @@ server <- function(input, output, session) {
     # cnvrt=0.00220462
     # tN=round((tNi*cnvrt),1)
     # sN=round((sNi*cnvrt),1)
-    taval=1.03E-04
-    tbval=2.117
-    saval=1.05e-3
-    sbval=2.412
+    taval=0.000108
+    tbval=2.086
+    saval=0.000547
+    sbval=2.562
     
     if(input$seedonly==T){
       tdw=taval*(input$seedSizeOut)^tbval
@@ -1021,11 +1021,11 @@ server <- function(input, output, session) {
       # sNi=0.0018*sdw
       if(input$ploidy=="Diploid"){
         tNi=0.06935*tdw
-        sNi=0.0017*sdw
+        sNi=0.0074*sdw
       }
       else if(input$ploidy=="Triploid"){
         tNi=0.05614*tdw
-        sNi=0.00182*sdw
+        sNi=0.0056*sdw
       }
       #convert grams N to lbs or kg
       cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
@@ -1044,15 +1044,15 @@ server <- function(input, output, session) {
       # sNi2=0.0018*sdw2
       if(input$ploidy=="Diploid"){
         tNi1=0.06935*tdw1
-        sNi1=0.0017*sdw1
+        sNi1=0.0074*sdw1
         tNi2=0.06935*tdw2
-        sNi2=0.0017*sdw2
+        sNi2=0.0074*sdw2
       }
       else if(input$ploidy=="Triploid"){
         tNi1=0.05614*tdw1
-        sNi1=0.00182*sdw1
+        sNi1=0.0056*sdw1
         tNi2=0.05614*tdw2
-        sNi2=0.00182*sdw2
+        sNi2=0.0056*sdw2
       }
       #convert grams N to lbs or kg
       cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
@@ -1102,10 +1102,10 @@ server <- function(input, output, session) {
   # dev.off()
   
   infoplot <- function(){
-    taval=1.03E-04
-    tbval=2.117
-    saval=1.05e-3
-    sbval=2.412
+    taval=0.000108
+    tbval=2.086
+    saval=0.000547
+    sbval=2.562
     if(input$seedonly==T){
       tdw=taval*(input$seedSizeOut)^tbval
       sdw=saval*(input$seedSizeOut)^sbval
@@ -1114,11 +1114,11 @@ server <- function(input, output, session) {
       # sNi=0.0018*sdw
       if(input$ploidy=="Diploid"){
         tNi=0.06935*tdw
-        sNi=0.0017*sdw
+        sNi=0.0074*sdw
       }
       else if(input$ploidy=="Triploid"){
         tNi=0.05614*tdw
-        sNi=0.00182*sdw
+        sNi=0.0056*sdw
       }
       #convert grams N to lbs or kg
       cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
@@ -1137,15 +1137,15 @@ server <- function(input, output, session) {
       # sNi2=0.0018*sdw2
       if(input$ploidy=="Diploid"){
         tNi1=0.06935*tdw1
-        sNi1=0.0017*sdw1
+        sNi1=0.0074*sdw1
         tNi2=0.06935*tdw2
-        sNi2=0.0017*sdw2
+        sNi2=0.0074*sdw2
       }
       else if(input$ploidy=="Triploid"){
         tNi1=0.05614*tdw1
-        sNi1=0.00182*sdw1
+        sNi1=0.0056*sdw1
         tNi2=0.05614*tdw2
-        sNi2=0.00182*sdw2
+        sNi2=0.0056*sdw2
       }
       #convert grams N to lbs or kg
       cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
