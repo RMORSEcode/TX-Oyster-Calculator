@@ -437,35 +437,35 @@ server <- function(input, output, session) {
     
     if(input$ploidy=="Diploid"){
       tNi1=0.0683*tdw1
-      sNi1=0.0074*sdw1
-      tPi1=0.0017*tdw1
-      sPi1=0.0003762*sdw1
+      sNi1=0.0017*sdw1
+      tPi1=0.0074*tdw1
+      sPi1=0.0004*sdw1
       tNi2=0.0683*tdw2
-      sNi2=0.0074*sdw2
-      tPi2=0.017*tdw2
-      sPi2=0.0003762*sdw2
+      sNi2=0.0017*sdw2
+      tPi2=0.0074*tdw2
+      sPi2=0.0004*sdw2
     }
     else if(input$ploidy=="Triploid"){
-      tNi1=0.05614*tdw1
-      sNi1=0.0056*sdw1
-      tPi1=0.0018*tdw1
-      sPi1=0.0003691*sdw1
+      tNi1=0.0563*tdw1
+      sNi1=0.0018*sdw1
+      tPi1=0.0056*tdw1
+      sPi1=0.0004*sdw1
       tNi2=0.05614*tdw2
-      sNi2=0.0056*sdw2
-      tPi2=0.0018*tdw2
-      sPi2=0.0003691*sdw2
+      sNi2=0.0018*sdw2
+      tPi2=0.0056*tdw2
+      sPi2=0.0004*sdw2
     }
 
     #convert grams N to lbs or kg
     cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
-    tN1=round((tNi1*cnvrt*input$HNum),1)
-    sN1=round((sNi1*cnvrt*input$HNum),1)
-    tP1=round((tPi1*cnvrt*input$HNum),1)
-    sP1=round((sPi1*cnvrt*input$HNum),1)
-    tN2=round((tNi2*cnvrt*input$HNum),1)
-    sN2=round((sNi2*cnvrt*input$HNum),1)
-    tP2=round((tPi2*cnvrt*input$HNum),1)
-    sP2=round((sPi2*cnvrt*input$HNum),1)
+    tN1=tNi1*cnvrt*input$HNum
+    sN1=sNi1*cnvrt*input$HNum
+    tP1=tPi1*cnvrt*input$HNum
+    sP1=sPi1*cnvrt*input$HNum
+    tN2=tNi2*cnvrt*input$HNum
+    sN2=sNi2*cnvrt*input$HNum
+    tP2=tPi2*cnvrt*input$HNum
+    sP2=sPi2*cnvrt*input$HNum
     sN=sN2-sN1
     tN=tN2-tN1
     sP=sP2-sP1
@@ -493,11 +493,11 @@ server <- function(input, output, session) {
     # sNi=0.0018*sdw
     if(input$ploidy=="Diploid"){
       tNi=0.0683*tdw
-      sNi=0.0074*sdw
+      sNi=0.0017*sdw
     }
     else if(input$ploidy=="Triploid"){
-      tNi=0.05614*tdw
-      sNi=0.0056*sdw
+      tNi=0.0563*tdw
+      sNi=0.0018*sdw
     }
     
     
@@ -527,22 +527,22 @@ server <- function(input, output, session) {
     
     if(input$ploidy=="Diploid"){
       tNi1=0.0683*tdw1
-      sNi1=0.0074*sdw1
+      sNi1=0.0017*sdw1
       tNi2=0.0683*tdw2
-      sNi2=0.0074*sdw2
+      sNi2=0.0017*sdw2
     }
     else if(input$ploidy=="Triploid"){
-      tNi1=0.05614*tdw1
-      sNi1=0.0056*sdw1
-      tNi2=0.05614*tdw2
-      sNi2=0.0056*sdw2
+      tNi1=0.0563*tdw1
+      sNi1=0.0018*sdw1
+      tNi2=0.0563*tdw2
+      sNi2=0.0018*sdw2
     }
     #convert grams N to lbs or kg
     cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
-    tN1=round((tNi1*cnvrt*input$HNum),1)
-    sN1=round((sNi1*cnvrt*input$HNum),1)
-    tN2=round((tNi2*cnvrt*input$HNum),1)
-    sN2=round((sNi2*cnvrt*input$HNum),1)
+    tN1=tNi1*cnvrt*input$HNum
+    sN1=sNi1*cnvrt*input$HNum
+    tN2=tNi2*cnvrt*input$HNum
+    sN2=sNi2*cnvrt*input$HNum
     sN=sN2-sN1
     tN=tN2-tN1
     
@@ -576,23 +576,23 @@ server <- function(input, output, session) {
     sdw2=saval*(input$sizeOut*25.4)^sbval
 
     if(input$ploidy=="Diploid"){
-      tPi1=0.0017*tdw1
-      sPi1=0.0003762*sdw1
-      tPi2=0.017*tdw2
-      sPi2=0.0003762*sdw2
+      tPi1=0.0074*tdw1
+      sPi1=0.0004*sdw1
+      tPi2=0.0074*tdw2
+      sPi2=0.0004*sdw2
     }
     else if(input$ploidy=="Triploid"){
-      tPi1=0.0018*tdw1
-      sPi1=0.0003691*sdw1
-      tPi2=0.0018*tdw2
-      sPi2=0.0003691*sdw2
+      tPi1=0.0056*tdw1
+      sPi1=0.0004*sdw1
+      tPi2=0.0056*tdw2
+      sPi2=0.0004*sdw2
     }
     #convert grams N to lbs or kg
     cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
-    tP1=round((tPi1*cnvrt*input$HNum),1)
-    sP1=round((sPi1*cnvrt*input$HNum),1)
-    tP2=round((tPi2*cnvrt*input$HNum),1)
-    sP2=round((sPi2*cnvrt*input$HNum),1)
+    tP1=tPi1*cnvrt*input$HNum
+    sP1=sPi1*cnvrt*input$HNum
+    tP2=tPi2*cnvrt*input$HNum
+    sP2=sPi2*cnvrt*input$HNum
     sP=sP2-sP1
     tP=tP2-tP1
     
@@ -630,22 +630,22 @@ server <- function(input, output, session) {
 
     if(input$ploidy=="Diploid"){
       tNi1=0.0683*tdw1
-      sNi1=0.0074*sdw1
+      sNi1=0.0017*sdw1
       tNi2=0.0683*tdw2
-      sNi2=0.0074*sdw2
+      sNi2=0.0017*sdw2
     }
     else if(input$ploidy=="Triploid"){
-      tNi1=0.05614*tdw1
-      sNi1=0.0056*sdw1
-      tNi2=0.05614*tdw2
-      sNi2=0.0056*sdw2
+      tNi1=0.0563*tdw1
+      sNi1=0.0018*sdw1
+      tNi2=0.0563*tdw2
+      sNi2=0.0018*sdw2
     }
     #convert grams N to lbs or kg
     cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
-    tN1=round((tNi1*cnvrt*input$HNum),1)
-    sN1=round((sNi1*cnvrt*input$HNum),1)
-    tN2=round((tNi2*cnvrt*input$HNum),1)
-    sN2=round((sNi2*cnvrt*input$HNum),1)
+    tN1=tNi1*cnvrt*input$HNum
+    sN1=sNi1*cnvrt*input$HNum
+    tN2=tNi2*cnvrt*input$HNum
+    sN2=sNi2*cnvrt*input$HNum
     
     sN=sN2-sN1
     tN=tN2-tN1
@@ -701,22 +701,22 @@ server <- function(input, output, session) {
 
     if(input$ploidy=="Diploid"){
       tNi1=0.0683*tdw1
-      sNi1=0.0074*sdw1
+      sNi1=0.0017*sdw1
       tNi2=0.0683*tdw2
-      sNi2=0.0074*sdw2
+      sNi2=0.0017*sdw2
     }
     else if(input$ploidy=="Triploid"){
-      tNi1=0.05614*tdw1
-      sNi1=0.0056*sdw1
-      tNi2=0.05614*tdw2
-      sNi2=0.0056*sdw2
+      tNi1=0.0563*tdw1
+      sNi1=0.0018*sdw1
+      tNi2=0.0563*tdw2
+      sNi2=0.0018*sdw2
     }
     #convert grams N to lbs or kg
     cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
-    tN1=round((tNi1*cnvrt*input$HNum),1)
-    sN1=round((sNi1*cnvrt*input$HNum),1)
-    tN2=round((tNi2*cnvrt*input$HNum),1)
-    sN2=round((sNi2*cnvrt*input$HNum),1)
+    tN1=tNi1*cnvrt*input$HNum
+    sN1=sNi1*cnvrt*input$HNum
+    tN2=tNi2*cnvrt*input$HNum
+    sN2=sNi2*cnvrt*input$HNum
     
     sN=sN2-sN1
     tN=tN2-tN1
