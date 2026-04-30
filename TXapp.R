@@ -48,7 +48,7 @@ ui <- fluidPage(style = 'margin-left: 10%; margin-right: 10%;',
                              helpText(br()),
                              ## Ploidy
                              # selectInput("ploidy", div(strong("Oyster Ploidy:")," Please select the ploidy of the oysters that were harvested", em("(will not affect calculation)")),c("Diploid", "Triploid", "Combination"), width="100%"),
-                             selectInput("ploidy", div(strong("Oyster Ploidy:")," Please select the ploidy of the oysters that were harvested"),c("Diploid", "Triploid"), width="100%"),
+                             # selectInput("ploidy", div(strong("Oyster Ploidy:")," Please select the ploidy of the oysters that were harvested"),c("Diploid", "Triploid"), width="100%"),
                              # selectInput("ploidy", div(strong("Oyster Ploidy:")," Please select the ploidy of the oysters that were harvested", c("Diploid", "Triploid"), width="100%"),
                              helpText(br()),
                              
@@ -132,124 +132,54 @@ ui <- fluidPage(style = 'margin-left: 10%; margin-right: 10%;',
                              
                              ### 2 REMOVAL DETAILS ###
                              helpText(h3("2) Oyster Removal Details")),
-                             helpText(h4("Please Select From The Following Choices:")),
-                             input_switch(
-                               "seedonly", div(strong("I Only Grow Seed Oysters"), value=F, width = "100%")
-                             ), 
-                             input_switch(
-                               "plantseed", div(strong("I Buy Seed Oysters And Plant On Site For Harvest"), value=F, width = "100%")
-                             ), 
-                             conditionalPanel(
-                               condition = "input.plantseed == true",
-                               input_switch(
-                                 "nurseryloc", div(strong("My Oyster Nursery And Growout Locations Are Different"), value=F, width = "100%")
-                               ),
-                               # conditionalPanel(
-                               #   condition = "input.seedonly == true",
-                               #   textAreaInput("seedprojloc", div(strong("Waterbody Name:"), " Please enter the name of the water body where the seed oysters were removed", em("(will not affect calculation)")), value = "", width ="100%", rows=1, placeholder = NULL),
-                               #   helpText(br()),
-                               #   dateRangeInput("seedTime", div(strong("Period of seed removal (yyyy-mm-dd):"), em("(does not affect calculation)")), start=NULL, end=NULL, min=Sys.Date()-(5*365), max=Sys.Date(), startview = "month", width="100%"),
-                               #   helpText(br()),
-                               #   helpText(h6("Seed Growout Location: "),"Please scroll or pinch to zoom to the growout area, then click once on the marker pin and select the site to record the coordinates. To remove a marker, click on the trash icon and then the errant marker", style = "font-size:18px;"),
-                               #   leafletOutput("seedonlymap", width="100%", height=400),
-                               #   tableOutput('seedonlyloctable'),
-                               #   sliderInput(
-                               #     "seedSizeOut",
-                               #     div(strong("Average seed oyster size (mm):"), " Please drag the slider to select the average size of the oyster seed removed for sale"),
-                               #     1,
-                               #     30,
-                               #     5,
-                               #     step = 1,
-                               #     round = FALSE,
-                               #     ticks = TRUE,
-                               #     animate = FALSE,
-                               #     width = "100%",
-                               #     sep = ",",
-                               #     dragRange = TRUE
-                               #   ),
-                               #   numericInput("seedNum", div(strong("Number of seed oysters removed:")," Please enter the total number of seed removed from the selected size"), 0, min=0, max=NA, width="100%"),
-                               #   helpText(br()),
-                               # ),
-                               conditionalPanel(
-                                 condition = "input.nurseryloc == true",
-                                 helpText(br()),
-                                 helpText(h6("Nursery Location: "),"Please scroll or pinch to zoom to the nursery area, then click once on the marker pin and select the site to record the coordinates. To remove a marker, click on the trash icon and then the errant marker", style = "font-size:18px;"),
-                                 leafletOutput("spatmap", width="100%", height=400),
-                                 tableOutput('spatloctable'),
-                                 helpText(br()),
-                               ),
-                               helpText(br()),
-                               textAreaInput("projloc", div(strong("Harvest Location Waterbody Name:"), " Please enter the name of the water body where the oysters were harvested from", em("(will not affect calculation)")), value = "", width ="100%", rows=1, placeholder = NULL),
-                               helpText(h6("Harvest Location: "),"Please scroll or pinch to zoom to the harvest location, then click once on the marker pin and select the site to record the coordinates. To remove a marker, click on the trash icon and then the errant marker", style = "font-size:18px;"),
-                               leafletOutput("mymap", width="100%", height=400),
-                               ## Location table
-                               tableOutput('loctable'),
-                               helpText(br()),
-                               ## Culture Method
-                               selectInput("gear", div(strong("Culture Method:")," Select the gear type primarily used for growing oysters, or select 'On-Bottom' for no gear", em("(will not affect calculation)")),c("Floating", "Off-bottom", "On-Bottom", "Multiple methods used"), width="100%"),
-                               helpText(br()),
-                               sliderInput(
-                                 "sizeIn",
-                                 div(strong("Average seed oyster size at planting (mm):"), " Please drag the slider to select the average size of the oysters at the time of planting"),
-                                 1,
-                                 30,
-                                 5,
-                                 step = 1,
-                                 round = FALSE,
-                                 ticks = TRUE,
-                                 animate = FALSE,
-                                 width = "100%",
-                                 sep = ",",
-                                 dragRange = TRUE
-                               ),
-                               br(),
-                               sliderInput(
-                                 "sizeOut",
-                                 div(strong("Select size of oysters at harvest (inches):"), " Please drag the slider to select the average size of the oysters at the time of harvest"),
-                                 2.0,
-                                 6.0,
-                                 3.0,
-                                 step = 0.1,
-                                 round = FALSE,
-                                 ticks = TRUE,
-                                 animate = FALSE,
-                                 width = "100%",
-                                 sep = ",",
-                                 dragRange = TRUE
-                               ),
-                               ## Number
-                               helpText(br()),
-                               numericInput("HNum", div(strong("Number of oysters at harvest:")," Please enter the total number of oysters harvested at the selected size"), 0, min=0, max=NA, width="100%"),
-                               helpText(br()),
-                               dateRangeInput("Htime", div(strong("Period of harvest (yyyy-mm-dd):"), em("(does not affect calculation)")), start=NULL, end=NULL, min=Sys.Date()-(5*365), max=Sys.Date(), startview = "month", width="100%"),
-                               br()
+                             helpText(br()),
+                             textAreaInput("projloc", div(strong("Harvest Location Waterbody Name:"), " Please enter the name of the water body where the oysters were harvested from", em("(will not affect calculation)")), value = "", width ="100%", rows=1, placeholder = NULL),
+                             helpText(h6("Harvest Location: "),"Please scroll or pinch to zoom to the harvest location, then click once on the marker pin and select the site to record the coordinates. To remove a marker, click on the trash icon and then the errant marker", style = "font-size:18px;"),
+                             leafletOutput("mymap", width="100%", height=400),
+                             ## Location table
+                             tableOutput('loctable'),
+                             helpText(br()),
+                             ## Culture Method
+                             selectInput("gear", div(strong("Culture Method:")," Select the gear type primarily used for growing oysters, or select 'On-Bottom' for no gear", em("(will not affect calculation)")),c("Floating", "Off-bottom", "On-Bottom", "Multiple methods used"), width="100%"),
+                             helpText(br()),
+                             selectInput("ploidy", div(strong("Oyster Ploidy:")," Please select the ploidy of the oysters that were harvested"),c("Diploid", "Triploid"), width="100%"),
+                             br(),
+                             sliderInput(
+                               "sizeIn",
+                               div(strong("Average seed oyster size at planting (mm):"), " Please drag the slider to select the average size of the oysters at the time of planting"),
+                               1,
+                               30,
+                               5,
+                               step = 1,
+                               round = FALSE,
+                               ticks = TRUE,
+                               animate = FALSE,
+                               width = "100%",
+                               sep = ",",
+                               dragRange = TRUE
                              ),
-                             conditionalPanel(
-                               condition = "input.seedonly == true",
-                               helpText(br()),
-                               textAreaInput("seedprojloc", div(strong("Waterbody Name:"), " Please enter the name of the water body where the seed oysters were removed", em("(will not affect calculation)")), value = "", width ="100%", rows=1, placeholder = NULL),
-                               dateRangeInput("seedTime", div(strong("Period of seed removal (yyyy-mm-dd):"), em("(does not affect calculation)")), start=NULL, end=NULL, min=Sys.Date()-(5*365), max=Sys.Date(), startview = "month", width="100%"),
-                               helpText(br()),
-                               helpText(h6("Seed Growout Location: "),"Please scroll or pinch to zoom to the growout area, then click once on the marker pin and select the site to record the coordinates. To remove a marker, click on the trash icon and then the errant marker", style = "font-size:18px;"),
-                               leafletOutput("seedonlymap", width="100%", height=400),
-                               tableOutput('seedonlyloctable'),
-                               sliderInput(
-                                 "seedSizeOut",
-                                 div(strong("Average seed oyster size (mm):"), " Please drag the slider to select the average size of the oyster seed removed for sale"),
-                                 1,
-                                 30,
-                                 5,
-                                 step = 1,
-                                 round = FALSE,
-                                 ticks = TRUE,
-                                 animate = FALSE,
-                                 width = "100%",
-                                 sep = ",",
-                                 dragRange = TRUE
-                               ),
-                               numericInput("seedNum", div(strong("Number of seed oysters removed:")," Please enter the total number of seed removed from the selected size"), 0, min=0, max=NA, width="100%"),
-                               helpText(br()),
+                             br(),
+                             sliderInput(
+                               "sizeOut",
+                               div(strong("Select size of oysters at harvest (inches):"), " Please drag the slider to select the average size of the oysters at the time of harvest"),
+                               2.0,
+                               6.0,
+                               3.0,
+                               step = 0.1,
+                               round = FALSE,
+                               ticks = TRUE,
+                               animate = FALSE,
+                               width = "100%",
+                               sep = ",",
+                               dragRange = TRUE
                              ),
+                             ## Number
+                             helpText(br()),
+                             numericInput("HNum", div(strong("Number of oysters at harvest:")," Please enter the total number of oysters harvested at the selected size"), 0, min=0, max=NA, width="100%"),
+                             helpText(br()),
+                             dateRangeInput("Htime", div(strong("Period of harvest (yyyy-mm-dd):"), em("(does not affect calculation)")), start=NULL, end=NULL, min=Sys.Date()-(5*365), max=Sys.Date(), startview = "month", width="100%"),
+                             br(),
+                             
                              helpText(br()),
                              ## Units
                              radioButtons(
@@ -463,35 +393,6 @@ server <- function(input, output, session) {
         editOptions = editToolbarOptions(edit = FALSE, selectedPathOptions = selectedPathOptions()))
   })
   
-  output$seedonlymap <- renderLeaflet({
-    leaflet(height="50%") %>%
-      addTiles() %>%
-      setView(lng = -96, lat = 29, zoom = 6) %>%
-      addDrawToolbar(
-        targetGroup='Selected',
-        polylineOptions=FALSE,
-        polygonOptions=FALSE,
-        markerOptions = T,
-        rectangleOptions =F,
-        circleOptions = F,
-        circleMarkerOptions = F,
-        editOptions = editToolbarOptions(edit = FALSE, selectedPathOptions = selectedPathOptions()))
-  })
-  
-  output$spatmap <- renderLeaflet({
-    leaflet(height="50%") %>%
-      addTiles() %>%
-      setView(lng = -96, lat = 29, zoom = 6) %>%
-      addDrawToolbar(
-        targetGroup='Selected',
-        polylineOptions=FALSE,
-        polygonOptions=FALSE,
-        markerOptions = T,
-        rectangleOptions =F,
-        circleOptions = F,
-        circleMarkerOptions = F,
-        editOptions = editToolbarOptions(edit = FALSE, selectedPathOptions = selectedPathOptions()))
-  })
   
   
   observeEvent(input$mymap_draw_new_feature,{
@@ -513,43 +414,7 @@ server <- function(input, output, session) {
     )
   })
   
-  observeEvent(input$spatmap_draw_new_feature,{
-    feature2 <- input$spatmap_draw_new_feature
-    
-    output$spatloctable <- renderTable(
-      data.frame("Lon"=feature2$geometry$coordinates[[1]],"Lat"=feature2$geometry$coordinates[[2]]),
-      striped = T,
-      hover = F,
-      bordered = T,
-      spacing = c("s", "xs", "m", "l"),
-      width = "auto",
-      align = NULL,
-      rownames = FALSE,
-      colnames = TRUE,
-      digits = 4,
-      na = "NA",
-      quoted = FALSE
-    )
-  })
   
-  observeEvent(input$seedonlymap_draw_new_feature,{
-    feature3 <- input$seedonlymap_draw_new_feature
-    
-    output$seedonlyloctable <- renderTable(
-      data.frame("Lon"=feature3$geometry$coordinates[[1]],"Lat"=feature3$geometry$coordinates[[2]]),
-      striped = T,
-      hover = F,
-      bordered = T,
-      spacing = c("s", "xs", "m", "l"),
-      width = "auto",
-      align = NULL,
-      rownames = FALSE,
-      colnames = TRUE,
-      digits = 4,
-      na = "NA",
-      quoted = FALSE
-    )
-  })
   # add  data contributor map
   output$contmap <- renderLeaflet({
     leaflet(height="100%") %>%
@@ -558,130 +423,59 @@ server <- function(input, output, session) {
       addMarkers(stations$Longitude, stations$Latitude, popup = stations$Waterbody_Name, label =stations$Waterbody_Name )
   })
   
-  # table <- reactive({
-  #   taval=0.000108
-  #   tbval=2.086
-  #   saval=0.000547
-  #   sbval=2.562
-  #   tdw=taval*(input$hsize*25.4)^tbval
-  #   sdw=saval*(input$hsize*25.4)^sbval
-  #   
-  #   #Convert dry weight of tissue and shell (g) to nutrients (g)
-  #   tNi=reactiveValues()
-  #   sNi=reactiveValues()
-  #   tNi=0.0619*tdw
-  #   sNi=0.0018*sdw
-  #   tPi=0.0065*tdw
-  #   sPi=0.0004*sdw
-  #   
-  #   #convert grams N to lbs or kg
-  #   cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
-  #   # tN=reactiveValues()
-  #   tN=round((tNi*cnvrt*input$Num),1)
-  #   # sN=reactiveValues()
-  #   sN=round((sNi*cnvrt*input$Num),1)
-  #   # tP=reactiveValues()
-  #   tP=round((tPi*cnvrt*input$Num),1)
-  #   # sP=reactiveValues()
-  #   sP=round((sPi*cnvrt*input$Num),1)
-  #   # df=data.frame("Shell_N"=sN, "Tissue_N"=tN, "Total_N"=sN+tN, "Shell_P"=sP, "Tissue_P"=tP, "Total_P"=sP+tP, "Units"=input$units)
-  #   # colnames(df)=c("Shell N", "Tissue N", "Total N", "Shell P", "Tissue P", "Total P", "Units")
-  #   
-  #   df=data.frame(matrix(c(sN, tN, tN+sN), nrow=1, ncol=3))
-  #   colnames(df)=c("Shell", "Tissue", "Total")
-  #   df=rbind(df, list(Shell=sP, Tissue=tP, Total=sP+tP))
-  #   df$Units=input$units
-  #   row.names(df)=c("Nitrogen", "Phosphorus")
-  #   
-  #   df
-  # })
+
   table <- reactive({
     taval=0.000108
     tbval=2.086
     saval=0.000547
     sbval=2.562
-    if(input$seedonly==T){
-      tdw=taval*(input$seedSizeOut)^tbval
-      sdw=saval*(input$seedSizeOut)^sbval
-      if(input$ploidy=="Diploid"){
-        tNi=0.06935*tdw
-        sNi=0.0074*sdw
-        tPi=0.0017*tdw
-        sPi=0.0003762*sdw
-      }
-      else if(input$ploidy=="Triploid"){
-        tNi=0.05614*tdw
-        sNi=0.0056*sdw
-        tPi=0.0018*tdw
-        sPi=0.0003691*sdw
-      }
-      #convert grams N to lbs or kg
-      cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
-      tN=round((tNi*cnvrt*input$seedNum),1)
-      sN=round((sNi*cnvrt*input$seedNum),1)
-      tP=round((tPi*cnvrt*input$seedNum),1)
-      sP=round((sPi*cnvrt*input$seedNum),1)
-      df=data.frame(matrix(c(sN, tN, tN+sN), nrow=1, ncol=3))
-      colnames(df)=c("Shell", "Tissue", "Total")
-      df=rbind(df, list(Shell=sP, Tissue=tP, Total=sP+tP))
-      df$Units=input$units
-      row.names(df)=c("Nitrogen", "Phosphorus")
-    }
     
-    else{
-      tdw1=taval*(input$sizeIn)^tbval
-      sdw1=saval*(input$sizeIn)^sbval
-      tdw2=taval*(input$sizeOut*25.4)^tbval
-      sdw2=saval*(input$sizeOut*25.4)^sbval
-      
-      if(input$ploidy=="Diploid"){
-        tNi1=0.06935*tdw1
-        sNi1=0.0074*sdw1
-        tPi1=0.0017*tdw1
-        sPi1=0.0003762*sdw1
-        tNi2=0.06935*tdw2
-        sNi2=0.0074*sdw2
-        tPi2=0.017*tdw2
-        sPi2=0.0003762*sdw2
-      }
-      else if(input$ploidy=="Triploid"){
-        tNi1=0.05614*tdw1
-        sNi1=0.0056*sdw1
-        tPi1=0.0018*tdw1
-        sPi1=0.0003691*sdw1
-        tNi2=0.05614*tdw2
-        sNi2=0.0056*sdw2
-        tPi2=0.0018*tdw2
-        sPi2=0.0003691*sdw2
-      }
-      # tNi1=0.0619*tdw1
-      # sNi1=0.0018*sdw1
-      # tPi1=0.0065*tdw1
-      # sPi1=0.0004*sdw1
-      # tNi2=0.0619*tdw2
-      # sNi2=0.0018*sdw2
-      # tPi2=0.0065*tdw2
-      # sPi2=0.0004*sdw2
-      #convert grams N to lbs or kg
-      cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
-      tN1=round((tNi1*cnvrt*input$HNum),1)
-      sN1=round((sNi1*cnvrt*input$HNum),1)
-      tP1=round((tPi1*cnvrt*input$HNum),1)
-      sP1=round((sPi1*cnvrt*input$HNum),1)
-      tN2=round((tNi2*cnvrt*input$HNum),1)
-      sN2=round((sNi2*cnvrt*input$HNum),1)
-      tP2=round((tPi2*cnvrt*input$HNum),1)
-      sP2=round((sPi2*cnvrt*input$HNum),1)
-      sN=sN2-sN1
-      tN=tN2-tN1
-      sP=sP2-sP1
-      tP=tP2-tP1
-      df=data.frame(matrix(c(sN, tN, tN+sN), nrow=1, ncol=3))
-      colnames(df)=c("Shell", "Tissue", "Total")
-      df=rbind(df, list(Shell=sP, Tissue=tP, Total=sP+tP))
-      df$Units=input$units
-      row.names(df)=c("Nitrogen", "Phosphorus")
+    tdw1=taval*(input$sizeIn)^tbval
+    sdw1=saval*(input$sizeIn)^sbval
+    tdw2=taval*(input$sizeOut*25.4)^tbval
+    sdw2=saval*(input$sizeOut*25.4)^sbval
+    
+    if(input$ploidy=="Diploid"){
+      tNi1=0.0683*tdw1
+      sNi1=0.0074*sdw1
+      tPi1=0.0017*tdw1
+      sPi1=0.0003762*sdw1
+      tNi2=0.0683*tdw2
+      sNi2=0.0074*sdw2
+      tPi2=0.017*tdw2
+      sPi2=0.0003762*sdw2
     }
+    else if(input$ploidy=="Triploid"){
+      tNi1=0.05614*tdw1
+      sNi1=0.0056*sdw1
+      tPi1=0.0018*tdw1
+      sPi1=0.0003691*sdw1
+      tNi2=0.05614*tdw2
+      sNi2=0.0056*sdw2
+      tPi2=0.0018*tdw2
+      sPi2=0.0003691*sdw2
+    }
+
+    #convert grams N to lbs or kg
+    cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
+    tN1=round((tNi1*cnvrt*input$HNum),1)
+    sN1=round((sNi1*cnvrt*input$HNum),1)
+    tP1=round((tPi1*cnvrt*input$HNum),1)
+    sP1=round((sPi1*cnvrt*input$HNum),1)
+    tN2=round((tNi2*cnvrt*input$HNum),1)
+    sN2=round((sNi2*cnvrt*input$HNum),1)
+    tP2=round((tPi2*cnvrt*input$HNum),1)
+    sP2=round((sPi2*cnvrt*input$HNum),1)
+    sN=sN2-sN1
+    tN=tN2-tN1
+    sP=sP2-sP1
+    tP=tP2-tP1
+    df=data.frame(matrix(c(sN, tN, tN+sN), nrow=1, ncol=3))
+    colnames(df)=c("Shell", "Tissue", "Total")
+    df=rbind(df, list(Shell=sP, Tissue=tP, Total=sP+tP))
+    df$Units=input$units
+    row.names(df)=c("Nitrogen", "Phosphorus")
+    # }
     df
   })
   # estimate number of oysters required for N load
@@ -698,7 +492,7 @@ server <- function(input, output, session) {
     # tNi=0.0619*tdw
     # sNi=0.0018*sdw
     if(input$ploidy=="Diploid"){
-      tNi=0.06935*tdw
+      tNi=0.0683*tdw
       sNi=0.0074*sdw
     }
     else if(input$ploidy=="Triploid"){
@@ -719,194 +513,39 @@ server <- function(input, output, session) {
     df3
   })
   
-  # Nplot <- reactive({
-  #   taval=0.000108
-  #   tbval=2.086
-  #   saval=0.000547
-  #   sbval=2.562
-  #   tdw=taval*((input$hsize*25.4)^tbval)
-  #   sdw=saval*((input$hsize*25.4)^sbval)
-  #   
-  #   #Convert dry weight of tissue and shell (g) to nutrients (g)
-  #   # tNi=reactiveValues()
-  #   # sNi=reactiveValues()
-  #   tNi=(0.0619*tdw)*input$Num
-  #   sNi=(0.0018*sdw)*input$Num
-  #   tPi=(0.0065*tdw)*input$Num
-  #   sPi=(0.0004*sdw)*input$Num
-  #   
-  #   #convert grams N to lbs or kg
-  #   cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
-  #   # tN=reactiveValues()
-  #   tN=round((tNi*cnvrt),1)
-  #   # sN=reactiveValues()
-  #   sN=round((sNi*cnvrt),1)
-  #   tP=round((tPi*cnvrt),1)
-  #   sP=round((sPi*cnvrt),1)
-  #   
-  #   ## Nitrogen only
-  #   # df2=data.frame(matrix(c(tN, tP), nrow=1, ncol=2))
-  #   # colnames(df2)=c("N", "P")
-  #   # df2$var="Tissue"
-  #   # df2=rbind(df2, list(N=sN, P=sP, var="Shell" ))
-  #   # df2=rbind(df2, list(N=sN+tN, P=sP+tP, var="Total" ))
-  #   # df2$units=input$units
-  #   # P=ggplot(df2, aes(x=var, y=N))+
-  #   #   geom_bar(stat="identity" , fill="steelblue", width = 0.65)+
-  #   #   # coord_cartesian(ylim=c(0, NA), xlim=NULL, clip = "on")+
-  #   #   # ylim(0,max(df2$N))+
-  #   #   # scale_y_continuous(limits = c(0, NA))+
-  #   #   # aes(ymin=0)+
-  #   #   theme_minimal()+
-  #   #   ylab(input$units)+
-  #   #   xlab("Nitrogen Removed")+
-  #   #   theme(axis.title.x = element_text(size = 16),
-  #   #         axis.text.x = element_text(size = 14),
-  #   #         axis.text.y = element_text(size = 14),
-  #   #         axis.title.y = element_text(size = 16))
-  #   # P
-  #   
-  #   ##update to add P data
-  #   # df2=data.frame(matrix(c(tN, tP), nrow=1, ncol=2))
-  #   # colnames(df2)=c("Nitrogen", "Phosphorus")
-  #   # df2$var="Tissue"
-  #   # df2=rbind(df2, list(Nitrogen=sN, Phosphorus=sP, var="Shell" ))
-  #   # df2=rbind(df2, list(Nitrogen=sN+tN, Phosphorus=sP+tP, var="Total" ))
-  #   # df2$units=input$units
-  #   # df3=df2 %>% tidyr::pivot_longer(cols=c("Nitrogen", "Phosphorus"), names_to="Nutrients")
-  #   ### both N and P
-  #   # P=ggplot(df3, aes(x=var, y=value, fill=Nutrients))+
-  #   #   geom_bar(stat="identity" , position='dodge', width = 0.9)+
-  #   #   # coord_cartesian(ylim=c(0, NA), xlim=NULL, clip = "on")+
-  #   #   # ylim(0,max(df2$N))+
-  #   #   # scale_y_continuous(limits = c(0, NA))+
-  #   #   # aes(ymin=0)+
-  #   #   # facet_wrap(~ Nutrients) +
-  #   #   theme_minimal()+
-  #   #   ylab(input$units)+
-  #   #   xlab("Nutrients Removed")+
-  #   #   theme(axis.title.x = element_text(size = 16),
-  #   #         axis.text.x = element_text(size = 14),
-  #   #         axis.text.y = element_text(size = 14),
-  #   #         axis.title.y = element_text(size = 16),
-  #   #         legend.text=element_text(size=12),
-  #   #         legend.title=element_text(size=12))
-  #   # P
-  #   ### N and P individually
-  #   df2=data.frame(matrix(tN, nrow=1, ncol=1))
-  #   colnames(df2)="Nitrogen"
-  #   df2$var="Tissue"
-  #   df2=rbind(df2, list(Nitrogen=sN, var="Shell" ))
-  #   df2=rbind(df2, list(Nitrogen=sN+tN, var="Total" ))
-  #   df2$units=input$units
-  #   P=ggplot(df2, aes(x=var, y=Nitrogen))+
-  #     geom_bar(stat="identity" , fill="steelblue", width = 0.65)+
-  #     # coord_cartesian(ylim=c(0, NA), xlim=NULL, clip = "on")+
-  #     # ylim(0,max(df2$N))+
-  #     # scale_y_continuous(limits = c(0, NA))+
-  #     # aes(ymin=0)+
-  #     # facet_wrap(~ Nutrients) +
-  #     theme_minimal()+
-  #     ylab(input$units)+
-  #     xlab("Nitrogen Removed")+
-  #     theme(axis.title.x = element_text(size = 16),
-  #           axis.text.x = element_text(size = 14),
-  #           axis.text.y = element_text(size = 14),
-  #           axis.title.y = element_text(size = 16))
-  #   
-  #   P
-  # })
-  # 
-  # Pplot <- reactive({
-  #   taval=0.000108
-  #   tbval=2.086
-  #   saval=0.000547
-  #   sbval=2.562
-  #   tdw=taval*((input$hsize*25.4)^tbval)
-  #   sdw=saval*((input$hsize*25.4)^sbval)
-  #   
-  #   tPi=(0.0065*tdw)*input$Num
-  #   sPi=(0.0004*sdw)*input$Num
-  #   
-  #   cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
-  #   tP=round((tPi*cnvrt),1)
-  #   sP=round((sPi*cnvrt),1)
-  #   
-  #   df3=data.frame(matrix(tP, nrow=1, ncol=1))
-  #   colnames(df3)="Phosphorus"
-  #   df3$var="Tissue"
-  #   df3=rbind(df3, list(Phosphorus=sP, var="Shell" ))
-  #   df3=rbind(df3, list(Phosphorus=sP+tP, var="Total" ))
-  #   df3$units=input$units
-  #   
-  #   P2=ggplot(df3, aes(x=var, y=Phosphorus))+
-  #     geom_bar(stat="identity" , fill="firebrick", width = 0.65)+
-  #     # coord_cartesian(ylim=c(0, NA), xlim=NULL, clip = "on")+
-  #     # ylim(0,max(df2$N))+
-  #     # scale_y_continuous(limits = c(0, NA))+
-  #     # aes(ymin=0)+
-  #     theme_minimal()+
-  #     ylab(input$units)+
-  #     xlab("Phosphorus Removed")+
-  #     theme(axis.title.x = element_text(size = 16),
-  #           axis.text.x = element_text(size = 14),
-  #           axis.text.y = element_text(size = 14),
-  #           axis.title.y = element_text(size = 16))
-  #   P2
-  # })
+
   Nplot <- reactive({
     taval=0.000108
     tbval=2.086
     saval=0.000547
     sbval=2.562
-    if(input$seedonly==T){
-      tdw=taval*(input$seedSizeOut)^tbval
-      sdw=saval*(input$seedSizeOut)^sbval
-      # tNi=0.0619*tdw
-      # sNi=0.0018*sdw
-      if(input$ploidy=="Diploid"){
-        tNi=0.06935*tdw
-        sNi=0.0074*sdw
-      }
-      else if(input$ploidy=="Triploid"){
-        tNi=0.05614*tdw
-        sNi=0.0056*sdw
-      }
-      #convert grams N to lbs or kg
-      cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
-      tN=round((tNi*cnvrt*input$seedNum),1)
-      sN=round((sNi*cnvrt*input$seedNum),1)
+    
+    tdw1=taval*(input$sizeIn)^tbval
+    sdw1=saval*(input$sizeIn)^sbval
+    tdw2=taval*(input$sizeOut*25.4)^tbval
+    sdw2=saval*(input$sizeOut*25.4)^sbval
+    
+    if(input$ploidy=="Diploid"){
+      tNi1=0.0683*tdw1
+      sNi1=0.0074*sdw1
+      tNi2=0.0683*tdw2
+      sNi2=0.0074*sdw2
     }
-    else{
-      tdw1=taval*(input$sizeIn)^tbval
-      sdw1=saval*(input$sizeIn)^sbval
-      tdw2=taval*(input$sizeOut*25.4)^tbval
-      sdw2=saval*(input$sizeOut*25.4)^sbval
-      # tNi1=0.0619*tdw1
-      # sNi1=0.0018*sdw1
-      # tNi2=0.0619*tdw2
-      # sNi2=0.0018*sdw2
-      if(input$ploidy=="Diploid"){
-        tNi1=0.06935*tdw1
-        sNi1=0.0074*sdw1
-        tNi2=0.06935*tdw2
-        sNi2=0.0074*sdw2
-      }
-      else if(input$ploidy=="Triploid"){
-        tNi1=0.05614*tdw1
-        sNi1=0.0056*sdw1
-        tNi2=0.05614*tdw2
-        sNi2=0.0056*sdw2
-      }
-      #convert grams N to lbs or kg
-      cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
-      tN1=round((tNi1*cnvrt*input$HNum),1)
-      sN1=round((sNi1*cnvrt*input$HNum),1)
-      tN2=round((tNi2*cnvrt*input$HNum),1)
-      sN2=round((sNi2*cnvrt*input$HNum),1)
-      sN=sN2-sN1
-      tN=tN2-tN1
+    else if(input$ploidy=="Triploid"){
+      tNi1=0.05614*tdw1
+      sNi1=0.0056*sdw1
+      tNi2=0.05614*tdw2
+      sNi2=0.0056*sdw2
     }
+    #convert grams N to lbs or kg
+    cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
+    tN1=round((tNi1*cnvrt*input$HNum),1)
+    sN1=round((sNi1*cnvrt*input$HNum),1)
+    tN2=round((tNi2*cnvrt*input$HNum),1)
+    sN2=round((sNi2*cnvrt*input$HNum),1)
+    sN=sN2-sN1
+    tN=tN2-tN1
+    
     df2=data.frame(matrix(tN, nrow=1, ncol=1))
     colnames(df2)="Nitrogen"
     df2$var="Tissue"
@@ -930,54 +569,33 @@ server <- function(input, output, session) {
     tbval=2.086
     saval=0.000547
     sbval=2.562
-    if(input$seedonly==T){
-      tdw=taval*(input$seedSizeOut)^tbval
-      sdw=saval*(input$seedSizeOut)^sbval
-      # tPi=0.0065*tdw
-      # sPi=0.0004*sdw
-      if(input$ploidy=="Diploid"){
-        tPi=0.0017*tdw
-        sPi=0.0003762*sdw
-      }
-      else if(input$ploidy=="Triploid"){
-        tPi=0.0018*tdw
-        sPi=0.0003691*sdw
-      }
-      #convert grams N to lbs or kg
-      cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
-      tP=round((tPi*cnvrt*input$seedNum),1)
-      sP=round((sPi*cnvrt*input$seedNum),1)
+    
+    tdw1=taval*(input$sizeIn)^tbval
+    sdw1=saval*(input$sizeIn)^sbval
+    tdw2=taval*(input$sizeOut*25.4)^tbval
+    sdw2=saval*(input$sizeOut*25.4)^sbval
+
+    if(input$ploidy=="Diploid"){
+      tPi1=0.0017*tdw1
+      sPi1=0.0003762*sdw1
+      tPi2=0.017*tdw2
+      sPi2=0.0003762*sdw2
     }
-    else {
-      tdw1=taval*(input$sizeIn)^tbval
-      sdw1=saval*(input$sizeIn)^sbval
-      tdw2=taval*(input$sizeOut*25.4)^tbval
-      sdw2=saval*(input$sizeOut*25.4)^sbval
-      # tPi1=0.0065*tdw1
-      # sPi1=0.0004*sdw1
-      # tPi2=0.0065*tdw2
-      # sPi2=0.0004*sdw2
-      if(input$ploidy=="Diploid"){
-        tPi1=0.0017*tdw1
-        sPi1=0.0003762*sdw1
-        tPi2=0.017*tdw2
-        sPi2=0.0003762*sdw2
-      }
-      else if(input$ploidy=="Triploid"){
-        tPi1=0.0018*tdw1
-        sPi1=0.0003691*sdw1
-        tPi2=0.0018*tdw2
-        sPi2=0.0003691*sdw2
-      }
-      #convert grams N to lbs or kg
-      cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
-      tP1=round((tPi1*cnvrt*input$HNum),1)
-      sP1=round((sPi1*cnvrt*input$HNum),1)
-      tP2=round((tPi2*cnvrt*input$HNum),1)
-      sP2=round((sPi2*cnvrt*input$HNum),1)
-      sP=sP2-sP1
-      tP=tP2-tP1
+    else if(input$ploidy=="Triploid"){
+      tPi1=0.0018*tdw1
+      sPi1=0.0003691*sdw1
+      tPi2=0.0018*tdw2
+      sPi2=0.0003691*sdw2
     }
+    #convert grams N to lbs or kg
+    cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
+    tP1=round((tPi1*cnvrt*input$HNum),1)
+    sP1=round((sPi1*cnvrt*input$HNum),1)
+    tP2=round((tPi2*cnvrt*input$HNum),1)
+    sP2=round((sPi2*cnvrt*input$HNum),1)
+    sP=sP2-sP1
+    tP=tP2-tP1
+    
     df3=data.frame(matrix(tP, nrow=1, ncol=1))
     colnames(df3)="Phosphorus"
     df3$var="Tissue"
@@ -995,75 +613,43 @@ server <- function(input, output, session) {
             axis.title.y = element_text(size = 16))
     P2
   })
-  # fertilplot <- reactive({
+  
+  
   fertilplot <- function(){
-    # taval=0.000108
-    # tbval=2.086
-    # saval=0.000547
-    # sbval=2.562
-    # tdw=taval*((input$hsize*25.4)^tbval)
-    # sdw=saval*((input$hsize*25.4)^sbval)
-    # tNi=(0.0796*tdw)*input$Num
-    # sNi=(0.0018*sdw)*input$Num
-    # cnvrt=0.00220462
-    # tN=round((tNi*cnvrt),1)
-    # sN=round((sNi*cnvrt),1)
+
     taval=0.000108
     tbval=2.086
     saval=0.000547
     sbval=2.562
+
+    tdw1=taval*(input$sizeIn)^tbval
+    sdw1=saval*(input$sizeIn)^sbval
+    tdw2=taval*(input$sizeOut*25.4)^tbval
+    sdw2=saval*(input$sizeOut*25.4)^sbval
     
-    if(input$seedonly==T){
-      tdw=taval*(input$seedSizeOut)^tbval
-      sdw=saval*(input$seedSizeOut)^sbval
-      
-      # tNi=0.0619*tdw
-      # sNi=0.0018*sdw
-      if(input$ploidy=="Diploid"){
-        tNi=0.06935*tdw
-        sNi=0.0074*sdw
-      }
-      else if(input$ploidy=="Triploid"){
-        tNi=0.05614*tdw
-        sNi=0.0056*sdw
-      }
-      #convert grams N to lbs or kg
-      cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
-      tN=round((tNi*cnvrt*input$seedNum),1)
-      sN=round((sNi*cnvrt*input$seedNum),1)
+
+    if(input$ploidy=="Diploid"){
+      tNi1=0.0683*tdw1
+      sNi1=0.0074*sdw1
+      tNi2=0.0683*tdw2
+      sNi2=0.0074*sdw2
     }
-    else{
-      tdw1=taval*(input$sizeIn)^tbval
-      sdw1=saval*(input$sizeIn)^sbval
-      tdw2=taval*(input$sizeOut*25.4)^tbval
-      sdw2=saval*(input$sizeOut*25.4)^sbval
-      
-      # tNi1=0.0619*tdw1
-      # sNi1=0.0018*sdw1
-      # tNi2=0.0619*tdw2
-      # sNi2=0.0018*sdw2
-      if(input$ploidy=="Diploid"){
-        tNi1=0.06935*tdw1
-        sNi1=0.0074*sdw1
-        tNi2=0.06935*tdw2
-        sNi2=0.0074*sdw2
-      }
-      else if(input$ploidy=="Triploid"){
-        tNi1=0.05614*tdw1
-        sNi1=0.0056*sdw1
-        tNi2=0.05614*tdw2
-        sNi2=0.0056*sdw2
-      }
-      #convert grams N to lbs or kg
-      cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
-      tN1=round((tNi1*cnvrt*input$HNum),1)
-      sN1=round((sNi1*cnvrt*input$HNum),1)
-      tN2=round((tNi2*cnvrt*input$HNum),1)
-      sN2=round((sNi2*cnvrt*input$HNum),1)
-      
-      sN=sN2-sN1
-      tN=tN2-tN1
+    else if(input$ploidy=="Triploid"){
+      tNi1=0.05614*tdw1
+      sNi1=0.0056*sdw1
+      tNi2=0.05614*tdw2
+      sNi2=0.0056*sdw2
     }
+    #convert grams N to lbs or kg
+    cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
+    tN1=round((tNi1*cnvrt*input$HNum),1)
+    sN1=round((sNi1*cnvrt*input$HNum),1)
+    tN2=round((tNi2*cnvrt*input$HNum),1)
+    sN2=round((sNi2*cnvrt*input$HNum),1)
+    
+    sN=sN2-sN1
+    tN=tN2-tN1
+    
     nBags=round(((sN+tN)/5),0)
     sqftlawns=round((sN+tN),0)*1000
     
@@ -1106,57 +692,35 @@ server <- function(input, output, session) {
     tbval=2.086
     saval=0.000547
     sbval=2.562
-    if(input$seedonly==T){
-      tdw=taval*(input$seedSizeOut)^tbval
-      sdw=saval*(input$seedSizeOut)^sbval
-      
-      # tNi=0.0619*tdw
-      # sNi=0.0018*sdw
-      if(input$ploidy=="Diploid"){
-        tNi=0.06935*tdw
-        sNi=0.0074*sdw
-      }
-      else if(input$ploidy=="Triploid"){
-        tNi=0.05614*tdw
-        sNi=0.0056*sdw
-      }
-      #convert grams N to lbs or kg
-      cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
-      tN=round((tNi*cnvrt*input$seedNum),1)
-      sN=round((sNi*cnvrt*input$seedNum),1)
+   
+    tdw1=taval*(input$sizeIn)^tbval
+    sdw1=saval*(input$sizeIn)^sbval
+    tdw2=taval*(input$sizeOut*25.4)^tbval
+    sdw2=saval*(input$sizeOut*25.4)^sbval
+    
+
+    if(input$ploidy=="Diploid"){
+      tNi1=0.0683*tdw1
+      sNi1=0.0074*sdw1
+      tNi2=0.0683*tdw2
+      sNi2=0.0074*sdw2
     }
-    else{
-      tdw1=taval*(input$sizeIn)^tbval
-      sdw1=saval*(input$sizeIn)^sbval
-      tdw2=taval*(input$sizeOut*25.4)^tbval
-      sdw2=saval*(input$sizeOut*25.4)^sbval
-      
-      # tNi1=0.0619*tdw1
-      # sNi1=0.0018*sdw1
-      # tNi2=0.0619*tdw2
-      # sNi2=0.0018*sdw2
-      if(input$ploidy=="Diploid"){
-        tNi1=0.06935*tdw1
-        sNi1=0.0074*sdw1
-        tNi2=0.06935*tdw2
-        sNi2=0.0074*sdw2
-      }
-      else if(input$ploidy=="Triploid"){
-        tNi1=0.05614*tdw1
-        sNi1=0.0056*sdw1
-        tNi2=0.05614*tdw2
-        sNi2=0.0056*sdw2
-      }
-      #convert grams N to lbs or kg
-      cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
-      tN1=round((tNi1*cnvrt*input$HNum),1)
-      sN1=round((sNi1*cnvrt*input$HNum),1)
-      tN2=round((tNi2*cnvrt*input$HNum),1)
-      sN2=round((sNi2*cnvrt*input$HNum),1)
-      
-      sN=sN2-sN1
-      tN=tN2-tN1
+    else if(input$ploidy=="Triploid"){
+      tNi1=0.05614*tdw1
+      sNi1=0.0056*sdw1
+      tNi2=0.05614*tdw2
+      sNi2=0.0056*sdw2
     }
+    #convert grams N to lbs or kg
+    cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
+    tN1=round((tNi1*cnvrt*input$HNum),1)
+    sN1=round((sNi1*cnvrt*input$HNum),1)
+    tN2=round((tNi2*cnvrt*input$HNum),1)
+    sN2=round((sNi2*cnvrt*input$HNum),1)
+    
+    sN=sN2-sN1
+    tN=tN2-tN1
+    # }
     
     nBags=round(((sN+tN)/5),0)
     sqftlawns=round((sN+tN),0)*1000
