@@ -381,6 +381,28 @@ server <- function(input, output, session) {
     releases[[1]][["name"]]
   })
   
+  ### add values for tissue/shell Nitrogen/Phosphorus north/south Diploid/Triploid
+  ## South is for Copano and south, North is for Matagorda and North
+  ##South
+  tNsD=7.92
+  tNsT=6.34
+  sNsD=0.13
+  sNsT=0.14
+  tPsD=0.86
+  tPsT=0.61
+  sPsD=0.03
+  sPsT=0.03
+  ##North
+  tNnD=6.28
+  tNnT=5.31
+  sNnD=0.19
+  sNnT=0.2
+  tPnD=0.68
+  tPnT=0.54
+  sPnD=0.04
+  sPnT=0.04
+  
+  
   output$mymap <- renderLeaflet({
     leaflet(height="50%") %>%
       addTiles() %>%
@@ -438,6 +460,9 @@ server <- function(input, output, session) {
     tdw2=taval*(input$sizeOut*25.4)^tbval
     sdw2=saval*(input$sizeOut*25.4)^sbval
     
+    # if(input$mymap_draw_new_feature$geometry$coordinates[[2]] >= 28.1){
+    #   
+    # }
     if(input$ploidy=="Diploid"){
       tNi1=0.0683*tdw1
       sNi1=0.0017*sdw1
