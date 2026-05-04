@@ -384,23 +384,23 @@ server <- function(input, output, session) {
   ### add values for tissue/shell Nitrogen/Phosphorus north/south Diploid/Triploid
   ## South is for Copano and south, North is for Matagorda and North
   ##South
-  tNsD=7.92
-  tNsT=6.34
-  sNsD=0.13
-  sNsT=0.14
-  tPsD=0.86
-  tPsT=0.61
-  sPsD=0.03
-  sPsT=0.03
+  tNsD=0.0792
+  tNsT=0.0634
+  sNsD=0.0013
+  sNsT=0.0014
+  tPsD=0.0086
+  tPsT=0.0061
+  sPsD=0.0003
+  sPsT=0.0003
   ##North
-  tNnD=6.28
-  tNnT=5.31
-  sNnD=0.19
-  sNnT=0.2
-  tPnD=0.68
-  tPnT=0.54
-  sPnD=0.04
-  sPnT=0.04
+  tNnD=0.0628
+  tNnT=0.0531
+  sNnD=0.0019
+  sNnT=0.002
+  tPnD=0.0068
+  tPnT=0.0054
+  sPnD=0.0004
+  sPnT=0.0004
   
   
   output$mymap <- renderLeaflet({
@@ -448,7 +448,7 @@ server <- function(input, output, session) {
       addMarkers(stations$Longitude, stations$Latitude, popup = stations$Waterbody_Name, label =stations$Waterbody_Name )
   })
   
-
+  
   table <- reactive({
     taval=0.000108
     tbval=2.086
@@ -460,30 +460,73 @@ server <- function(input, output, session) {
     tdw2=taval*(input$sizeOut*25.4)^tbval
     sdw2=saval*(input$sizeOut*25.4)^sbval
     
-    # if(input$mymap_draw_new_feature$geometry$coordinates[[2]] >= 28.1){
-    #   
+    if(input$mymap_draw_new_feature$geometry$coordinates[[2]] >= 28.1){
+      if(input$ploidy=="Diploid"){
+        tNi1=tNnD*tdw1
+        sNi1=sNnD*sdw1
+        tPi1=tPnD*tdw1
+        sPi1=sPnD*sdw1
+        tNi2=tNnD*tdw2
+        sNi2=sNnD*sdw2
+        tPi2=tPnD*tdw2
+        sPi2=sPnD*sdw2
+      } else{
+        tNi1=tNnT*tdw1
+        sNi1=sNnT*sdw1
+        tPi1=tPnT*tdw1
+        sPi1=sPnT*sdw1
+        tNi2=tNnT*tdw2
+        sNi2=sNnT*sdw2
+        tPi2=tPnT*tdw2
+        sPi2=sPnT*sdw2
+      }
+    } else{
+      if(input$ploidy=="Diploid"){
+        tNi1=tNsD*tdw1
+        sNi1=sNsD*sdw1
+        tPi1=tPsD*tdw1
+        sPi1=sPsD*sdw1
+        tNi2=tNsD*tdw2
+        sNi2=sNsD*sdw2
+        tPi2=tPsD*tdw2
+        sPi2=sPsD*sdw2
+      } else{
+        tNi1=tNsT*tdw1
+        sNi1=sNsT*sdw1
+        tPi1=tPsT*tdw1
+        sPi1=sPsT*sdw1
+        tNi2=tNsT*tdw2
+        sNi2=sNsT*sdw2
+        tPi2=tPsT*tdw2
+        sPi2=sPsT*sdw2
+      }
+    }
+    
+    
+    
+    
+    # if(input$ploidy=="Diploid"){
+    #   tNi1=0.0683*tdw1
+    #   sNi1=0.0017*sdw1
+    #   tPi1=0.0074*tdw1
+    #   sPi1=0.0004*sdw1
+    #   tNi2=0.0683*tdw2
+    #   sNi2=0.0017*sdw2
+    #   tPi2=0.0074*tdw2
+    #   sPi2=0.0004*sdw2
     # }
-    if(input$ploidy=="Diploid"){
-      tNi1=0.0683*tdw1
-      sNi1=0.0017*sdw1
-      tPi1=0.0074*tdw1
-      sPi1=0.0004*sdw1
-      tNi2=0.0683*tdw2
-      sNi2=0.0017*sdw2
-      tPi2=0.0074*tdw2
-      sPi2=0.0004*sdw2
-    }
-    else if(input$ploidy=="Triploid"){
-      tNi1=0.0563*tdw1
-      sNi1=0.0018*sdw1
-      tPi1=0.0056*tdw1
-      sPi1=0.0004*sdw1
-      tNi2=0.05614*tdw2
-      sNi2=0.0018*sdw2
-      tPi2=0.0056*tdw2
-      sPi2=0.0004*sdw2
-    }
-
+    # else if(input$ploidy=="Triploid"){
+    #   tNi1=0.0563*tdw1
+    #   sNi1=0.0018*sdw1
+    #   tPi1=0.0056*tdw1
+    #   sPi1=0.0004*sdw1
+    #   tNi2=0.05614*tdw2
+    #   sNi2=0.0018*sdw2
+    #   tPi2=0.0056*tdw2
+    #   sPi2=0.0004*sdw2
+    # }
+    
+    
     #convert grams N to lbs or kg
     cnvrt=ifelse(input$units=="Pounds (lbs)",0.00220462,0.001)
     tN1=tNi1*cnvrt*input$HNum
@@ -506,6 +549,8 @@ server <- function(input, output, session) {
     # }
     df
   })
+  
+  
   # estimate number of oysters required for N load
   esttable <- reactive({
     taval=0.000108
@@ -541,7 +586,7 @@ server <- function(input, output, session) {
     df3
   })
   
-
+  
   Nplot <- reactive({
     taval=0.000108
     tbval=2.086
@@ -602,7 +647,7 @@ server <- function(input, output, session) {
     sdw1=saval*(input$sizeIn)^sbval
     tdw2=taval*(input$sizeOut*25.4)^tbval
     sdw2=saval*(input$sizeOut*25.4)^sbval
-
+    
     if(input$ploidy=="Diploid"){
       tPi1=0.0074*tdw1
       sPi1=0.0004*sdw1
@@ -644,18 +689,18 @@ server <- function(input, output, session) {
   
   
   fertilplot <- function(){
-
+    
     taval=0.000108
     tbval=2.086
     saval=0.000547
     sbval=2.562
-
+    
     tdw1=taval*(input$sizeIn)^tbval
     sdw1=saval*(input$sizeIn)^sbval
     tdw2=taval*(input$sizeOut*25.4)^tbval
     sdw2=saval*(input$sizeOut*25.4)^sbval
     
-
+    
     if(input$ploidy=="Diploid"){
       tNi1=0.0683*tdw1
       sNi1=0.0017*sdw1
@@ -720,13 +765,13 @@ server <- function(input, output, session) {
     tbval=2.086
     saval=0.000547
     sbval=2.562
-   
+    
     tdw1=taval*(input$sizeIn)^tbval
     sdw1=saval*(input$sizeIn)^sbval
     tdw2=taval*(input$sizeOut*25.4)^tbval
     sdw2=saval*(input$sizeOut*25.4)^sbval
     
-
+    
     if(input$ploidy=="Diploid"){
       tNi1=0.0683*tdw1
       sNi1=0.0017*sdw1
