@@ -8,7 +8,6 @@ library(shiny)
 library(shinyWidgets)
 library(leaflet)
 library(leaflet.extras)
-# library(shinyscreenshot)
 library(ggplot2)
 library(formatR)
 library(tinytex)
@@ -28,11 +27,8 @@ ui <- fluidPage(style = 'margin-left: 10%; margin-right: 10%;',
                   tabsetPanel(
                     type = "tabs",
                     tabPanel("TX Calculator", 
-                             # tags$img(src='swooshgn2.png'),
-                             # tags$img(src='gn_swoosh_shellfish3.png'),
-                             # tags$img(src='white_swoosh_cage_500pxH.png', width = "100%", alt="NOAA branding, NOAA Fisheries Logo, and multiple oysters on and in cage"),
                              tags$img(src='img1_1100_350.png', width = "100%", alt="NOAA branding and NOAA Fisheries Logo, with Texas A&M Harte Institute logo, and multiple oyster cages under floating gear in Texas with a boat in the background"),
-                             titlePanel(h1("Texas Oyster Nutrient Removal Calculator"), windowTitle = "Texas Oyster Nutrient Removal Calculator"),
+                             titlePanel(h1("Texas Aquaculture Nutrient Removal Calculator"), windowTitle = "Texas Aquaculture Nutrient Removal Calculator"),
                              helpText(br()),
                              
                              ### add text box with black border ### #5761C0  style = "border-style: solid; border-color: #C6E6F0#5EB6D9; background-color: #5EB6D9;",
@@ -47,90 +43,7 @@ ui <- fluidPage(style = 'margin-left: 10%; margin-right: 10%;',
                              ## Name
                              textAreaInput("farmname", div(strong("Project Name:"), " Please enter the name of the oyster farm"),value = "", width="100%", rows=1, placeholder = NULL),
                              helpText(br()),
-                             ## Ploidy
-                             # selectInput("ploidy", div(strong("Oyster Ploidy:")," Please select the ploidy of the oysters that were harvested", em("(will not affect calculation)")),c("Diploid", "Triploid", "Combination"), width="100%"),
-                             # selectInput("ploidy", div(strong("Oyster Ploidy:")," Please select the ploidy of the oysters that were harvested"),c("Diploid", "Triploid"), width="100%"),
-                             # selectInput("ploidy", div(strong("Oyster Ploidy:")," Please select the ploidy of the oysters that were harvested", c("Diploid", "Triploid"), width="100%"),
                              helpText(br()),
-                             
-                             # #####______________________________________
-                             # ### 2 LOCATION ###
-                             # helpText(h3("2) Farm Location")),
-                             # textAreaInput("projloc", div(strong("Harvest Location:"), " Please enter the name of the water body where the oysters were harvested from", em("(will not affect calculation)")), value = "", width ="100%", rows=2, placeholder = NULL),
-                             # helpText(br()),
-                             # helpText(h6("Approximate Coordinates: "),"Please scroll or pinch to zoom to the harvest location, then click once on the marker pin and select the site to record the coordinates. To remove a marker, click on the trash icon and then the errant marker", style = "font-size:18px;"),
-                             # leafletOutput("mymap", width="100%", height=400),
-                             # ## Location table
-                             # tableOutput('loctable'),
-                             # helpText(br()),
-                             # 
-                             # ### 3 HARVEST DETAILS ###
-                             # helpText(h3("3) Harvest Details")),
-                             # input_switch("switch", div(strong("Click Here If Oyster Seed Is Imported And Planted For Growout"), value=F, width = "100%")), 
-                             # conditionalPanel(
-                             #   condition = "input.switch == true",
-                             #   input_switch("switch2", div(strong("Click Here If Oyster Nursery And Growout Locations Are Different"), value=F, width = "100%")), 
-                             #   conditionalPanel(
-                             #     condition = "input.switch2 == true",
-                             #     helpText(h6("Nursery Location: "),"Please scroll or pinch to zoom to the nursery area, then click once on the marker pin and select the site to record the coordinates. To remove a marker, click on the trash icon and then the errant marker", style = "font-size:18px;"),
-                             #     leafletOutput("spatmap", width="100%", height=400),
-                             #     tableOutput('spatloctable'),
-                             #   ),
-                             #   sliderInput(
-                             #     "sizeIn",
-                             #     div(strong("Average seed oyster size at planting (Inches):"), " Please drag the slider to select the average size of the oysters at the time of planting"),
-                             #     0,
-                             #     2.0,
-                             #     0.2,
-                             #     step = 0.1,
-                             #     round = FALSE,
-                             #     ticks = TRUE,
-                             #     animate = FALSE,
-                             #     width = "100%",
-                             #     sep = ",",
-                             #     dragRange = TRUE
-                             #   ),
-                             #   # sliderInput(
-                             #   #   "sizeOut",
-                             #   #   div(strong("Select size of oysters at harves (inches):"), " Please drag the slider to select the average size of the oysters at the time of harvest"),
-                             #   #   2.0,
-                             #   #   6.0,
-                             #   #   3.0,
-                             #   #   step = 0.1,
-                             #   #   round = FALSE,
-                             #   #   ticks = TRUE,
-                             #   #   animate = FALSE,
-                             #   #   width = "100%",
-                             #   #   sep = ",",
-                             #   #   dragRange = TRUE
-                             #   # ),
-                             # ),
-                             # 
-                             # ## Size
-                             # sliderInput(
-                             #   "hsize",
-                             #   div(strong("Average oyster size at harvest (Inches):"), " Please drag the slider to select the average size of the oysters that were harvested"),
-                             #   2.0,
-                             #   6.0,
-                             #   3.0,
-                             #   step = 0.1,
-                             #   round = FALSE,
-                             #   ticks = TRUE,
-                             #   animate = FALSE,
-                             #   width = "100%",
-                             #   sep = ",",
-                             #   dragRange = TRUE
-                             # ),
-                             # # ),
-                             # helpText(br()),
-                             # ## Number
-                             # numericInput("Num", div(strong("Number of oysters at harvest:")," Please enter the total number of oysters harvested at the selected size"), 0, min=0, max=NA, width="100%"),
-                             # helpText(br()),
-                             # ## Dates
-                             # # dateRangeInput("Htime", div(strong("Period of harvest (yyyy-mm-dd):"), em("(does not affect calculation)")), start=NULL, end=NULL, min=Sys.Date()-(5*365), max=Sys.Date()+(2*365), startview = "month", width="100%"),
-                             # dateRangeInput("Htime", div(strong("Period of harvest (yyyy-mm-dd):"), em("(does not affect calculation)")), start=NULL, end=NULL, min=Sys.Date()-(5*365), max=Sys.Date(), startview = "month", width="100%"),
-                             # #####_________________________________________
-                             
                              ### 2 REMOVAL DETAILS ###
                              helpText(h3("2) Oyster Removal Details")),
                              helpText(br()),
@@ -213,10 +126,10 @@ ui <- fluidPage(style = 'margin-left: 10%; margin-right: 10%;',
                              ),
                              br(),
                              br(),
-                             h6(tags$a(target="_blank", href="https://doi.org/10.5281/zenodo.11966672",
-                                       "Access publicly available data used to create this tool >")),
-                             h6(tags$a(target="_blank", href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0310062",
-                                       "Read about methods used to create this tool >")),
+                             # h6(tags$a(target="_blank", href="",
+                             # "Access publicly available data used to create this tool >")),
+                             # h6(tags$a(target="_blank", href="",
+                             # "Read about methods used to create this tool >")),
                              br(),
                              h4("Disclaimer"),
                              p("This is a scientific product and is not an official communication of the National Oceanic and Atmospheric Administration, or the United States Department of Commerce. All NOAA GitHub project code is provided on an ‘as is’ basis and the user assumes responsibility for its use. Any claims against the Department of Commerce or Department of Commerce bureaus stemming from the use of this GitHub project will be governed by all applicable Federal law. Any reference to specific commercial products, processes, or services by service mark, trademark, manufacturer, or otherwise, does not constitute or imply their endorsement, recommendation or favoring by the Department of Commerce. The Department of Commerce seal and logo, or the seal and logo of a DOC bureau, shall not be used in any manner to imply endorsement of any commercial product or activity by DOC or the United States Government."
@@ -224,7 +137,6 @@ ui <- fluidPage(style = 'margin-left: 10%; margin-right: 10%;',
                     ),
                     
                     tabPanel("Reverse Calculator",
-                             # tags$img(src='white_swoosh_orange_bin_500pxH.png', width = "100%", alt="NOAA branding, NOAA Fisheries Logo, and oysters in orange basket."),
                              tags$img(src='img1_1100_350.png', width = "100%", alt="NOAA branding and NOAA Fisheries Logo, with Texas A&M Harte Institute logo, and multiple oyster cages under floating gear in Texas with a boat in the background"),
                              titlePanel(h1("Texas Oyster Nutrient Removal Calculator"), windowTitle = "Texas Oyster Nutrient Removal Calculator"),
                              helpText(br()),
@@ -294,9 +206,9 @@ ui <- fluidPage(style = 'margin-left: 10%; margin-right: 10%;',
                                ),
                                
                              ),
-                             h6(tags$a(target="_blank", href="https://doi.org/10.5281/zenodo.11966672",
-                                       "Access publicly available data used to create this tool >")
-                             ),
+                             # h6(tags$a(target="_blank", href="",
+                             #           "Access publicly available data used to create this tool >")
+                             # ),
                              br(),
                              h4("Location of Eastern oyster", em("(Crassostrea virginica)"), "samples from aquaculture farm sites used to develop the calculator"
                              ),
@@ -313,10 +225,13 @@ ui <- fluidPage(style = 'margin-left: 10%; margin-right: 10%;',
                              br(),
                              tags$p(
                                h4("Project Team"),
-                               tags$a(target="_blank", href="https://www.linkedin.com/in/julie-m-rose/", "Julie Rose,"),
-                               tags$a(target="_blank", href="https://www.linkedin.com/in/chris-schillaci/", "Chris Schillaci,"),
-                               tags$a(target="_blank", href="https://seagrant.uconn.edu/person/zachary-gordon/", "Zach Gordon,"),
+                               tags$a(target="_blank", href="https://www.harteresearch.org/people/jennifer-pollack", "Jennifer Pollack,"),
+                               # tags$a(target="_blank", href="https://www.linkedin.com/in/julie-m-rose/", "Julie Rose,"),
+                               # tags$a(target="_blank", href="https://www.linkedin.com/in/chris-schillaci/", "Chris Schillaci,"),
+                               tags$a(target="_blank", href="https://oyster.texasseagrant.org/", "Mario Marquez,"),
                                tags$a(target="_blank", href="https://www.fisheries.noaa.gov/contact/ryan-morse-phd","Ryan Morse"),
+                               tags$a(target="_blank", href="https://www.harteresearch.org/people/geret-depiper", "Geret DePiper"),
+                               tags$a(target="_blank", href="https://www.harteresearch.org/people/michael-wetz", "Michael Wetz"),
                              ),
                              div( style = "border-style: solid; border-radius: 10px; border-color: #0085CA; background-color: #0085CA;",
                                   p("Send questions or comments to:",style="text-align:center; padding-left:10px; padding-right:10px; font-size:16px; color: white"),
@@ -362,6 +277,7 @@ ui <- fluidPage(style = 'margin-left: 10%; margin-right: 10%;',
                   )
                 )
 )
+
 
 
 
@@ -449,7 +365,7 @@ server <- function(input, output, session) {
   })
   
   
-  table <- reactive({
+  table1 <- reactive({
     taval=0.000108
     tbval=2.086
     saval=0.000547
@@ -501,8 +417,6 @@ server <- function(input, output, session) {
         sPi2=sPsT*sdw2
       }
     }
-    
-    
     
     
     # if(input$ploidy=="Diploid"){
@@ -827,23 +741,39 @@ server <- function(input, output, session) {
   # Output Components
   output$nutbplot <- 
     renderPlot({
+      req(input$HNum)
+      req(input$mymap_draw_new_feature)
       Nplot()
     })
+  
   output$nutbplot2 <- 
     renderPlot({
+      req(input$HNum)
+      req(input$mymap_draw_new_feature)
       Pplot()
     })
+  
+  # output$mytable <-
+  #     renderTable(
+  #     table1(),
+  #     rownames = TRUE
+  #   )
   output$mytable <-
-    renderTable(
-      table(),
-      rownames = TRUE
-    )
+    renderTable({
+      req(input$HNum)
+      req(input$mymap_draw_new_feature)
+      table1()
+   },rownames = TRUE)
+  
   output$mytable2 <-
     renderTable({
       esttable()
     })
+  
   output$fertplot <- 
     renderPlot({
+      req(input$HNum)
+      req(input$mymap_draw_new_feature)
       fertilplot()
     })
   
@@ -870,32 +800,23 @@ server <- function(input, output, session) {
         function(file)
         {
           rmarkdown::render(
-            input = "report.Rmd",
+            input = "TXreport.Rmd",
             output_file = "built_report.pdf",
             params = list(
-              Seed=input$seedonly,
-              NurseryLocDiff=input$nurseryloc,
-              table = table(),
+              table = table1(),
               Nplot = Nplot(),
               Pplot = Pplot(),
               Location=input$projloc,
-              seedLocation=input$seedprojloc,
               Units=input$units, 
               gear=input$gear, 
               ploidy=input$ploidy, 
               seedsize=input$seedSizeOut,
               size=input$sizeOut,
               Farm=input$farmname,
-              seedNumber=input$seedNum,
               Number=input$HNum,
               Dates=input$Htime,
-              seedDates=input$seedTime,
               HLat=input$mymap_draw_new_feature$geometry$coordinates[[2]],
               HLon=input$mymap_draw_new_feature$geometry$coordinates[[1]],
-              nurseLat=input$spatmap_draw_new_feature$geometry$coordinates[[2]],
-              nurseLon=input$spatmap_draw_new_feature$geometry$coordinates[[1]],
-              seedLat=input$seedonlymap_draw_new_feature$geometry$coordinates[[2]],
-              seedLon=input$seedonlymap_draw_new_feature$geometry$coordinates[[1]]
             )
           ) 
           readBin(con = "built_report.pdf", 
