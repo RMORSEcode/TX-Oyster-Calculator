@@ -70,49 +70,32 @@ knitr::opts_chunk$set(opts.label="kill_prefix")
 **Oyster ploidy:**  
 `r params[["ploidy"]]`
 
-<!-- ### Seed Only Options ### -->
-`r if(params[["Seed"]]==T) {"**Farm grows seed only (No Harvest):**  "}`
-`r if(params[["Seed"]]==T) {params[["Seed"]]}`  
-<!-- Name of waterbody-->
-`r if(params[["Seed"]]==T) {"**Name of the water body where the seed oysters were removed:**  "}`
-`r if(params[["Seed"]]==T) {params[["seedLocation"]]}`  
-<!-- Lat/Lon-->
-`r if(params[["Seed"]]==T) {"**Seed removal location (latitude, longitude):**  "}`  
-`r if(params[["Seed"]]==T) {c(params[["seedLat"]], params[["seedLon"]])}`  
-<!-- Seed size -->
-`r if(params[["Seed"]]==T) {"**Average size of oysters seed removed (mm):**  "}`
-`r if(params[["Seed"]]==T) {params[["seedsize"]]}`  
-<!-- Seed number -->
-`r if(params[["Seed"]]==T) {"**Total number of seed oysters removed:**  "}`
-`r if(params[["Seed"]]==T) {params[["seedNumber"]]}`  
-<!-- Removal Dates -->
-`r if(params[["Seed"]]==T) {"**Period of seed removal (YYYY-MM-DD begin, end):**  "}`
-`r  if(params[["Seed"]]==T) {params[["seedDates"]]}`
 <!-- ### Harvest Options ### -->
 
 <!-- Name of waterbody-->
-`r if(params[["Seed"]]==F) {"**Name of the water body where the oysters were harvested:**  "}`
-`r if(params[["Seed"]]==F) {params[["Location"]]}`  
+**Name of the water body where the oysters were harvested:**  
+`r params[["Location"]]`  
 <!-- Lat/Lon-->
-`r if(params[["Seed"]]==F) {"**Harvest location (latitude, longitude):**  "}`  
-`r if(params[["Seed"]]==F) {c(params[["HLat"]], params[["HLon"]])}`  
+**Harvest location (latitude, longitude):**    
+`r c(params[["HLat"]], params[["HLon"]])`  
 <!-- Nursery location options -->
-`r if(params[["NurseryLocDiff"]]==T) {"**Nursery location is seperate from harvest location:**  "}`
-`r if(params[["NurseryLocDiff"]]==T) {params[["NurseryLocDiff"]]}`  
-`r if(params[["NurseryLocDiff"]]==T) {"**Nursery location (latitude, longitude):**  "}`  
-`r if(params[["NurseryLocDiff"]]==T) {c(params[["nurseLat"]], params[["nurseLon"]])}`  
+<!-- `r if(params[["NurseryLocDiff"]]==T) {"**Nursery location is seperate from harvest location:**  "}` -->
+<!-- `r if(params[["NurseryLocDiff"]]==T) {params[["NurseryLocDiff"]]}`   -->
+<!-- `r if(params[["NurseryLocDiff"]]==T) {"**Nursery location (latitude, longitude):**  "}`   -->
+<!-- `r if(params[["NurseryLocDiff"]]==T) {c(params[["nurseLat"]], params[["nurseLon"]])}`   -->
 <!-- Culture method -->
-`r if(params[["Seed"]]==F) {"**Culture method:**  "}`
-`r if(params[["Seed"]]==F) {params[["gear"]]}`  
+**Culture method:**  
+`r params[["gear"]]`  
 <!-- Harvest number -->
-`r if(params[["Seed"]]==F) {"**Total number of oysters harvested:**  "}`
-`r if(params[["Seed"]]==F) {params[["Number"]]}`  
+**Total number of oysters harvested:**  
+`r params[["Number"]]`  
 <!-- Harvest size -->
-`r if(params[["Seed"]]==F) {"**Average size of oysters at harvest (Inches):**  "}`
-`r if(params[["Seed"]]==F) {params[["size"]]}`  
+**Average size of oysters at harvest (Inches):**  
+`r params[["size"]]`  
 <!-- Harvest Dates -->
-`r if(params[["Seed"]]==F) {"**Period of harvest (YYYY-MM-DD begin, end):**  "}`
-`r  if(params[["Seed"]]==F) {params[["Dates"]]}`
+**Period of harvest (YYYY-MM-DD begin, end):**  
+`r  params[["Dates"]]`
+
 
 
 # **Calculated Farm Nutrient Removal**  
@@ -129,16 +112,11 @@ params[["Nplot"]]
 params[["Pplot"]]
 ```
 
-<!-- If seed only, call file with summary text selected for seed -->
-```{r conditional_print, child='seedText.Rmd', eval = params[["Seed"]]}
-```
 
-<!-- If harvest, call file with summary text selected for harvest values -->
-```{r conditional_print, child='harvestText.Rmd', eval = params[["Seed"]]==F}
-```
+# **Summary**  
+Shellfish incorporate nutrients into their tissues and shell as they grow. At harvest, these nutrients are permanently removed from the coastal environment, providing a benefit to water quality in the form of excess nutrient reduction. The harvest of `r params[["Number"]]` oysters at an average size of `r  params[["size"]]` inches is expected to result in the removal of a total of `r round(params[["Nplot"]]$data$N[3], 2)` pounds (lbs) of nitrogen and `r round(params[["Pplot"]]$data$P[3], 2)` pounds (lbs) of phosphorus during the harvest period.  
 
-<!-- # **Summary**   -->
-<!-- Shellfish incorporate nutrients into their tissues and shell as they grow. At harvest, these nutrients are permanently removed from the coastal environment, providing a benefit to water quality in the form of excess nutrient reduction. The harvest of `r params[["Number"]]` oysters at an average size of `r  params[["size"]]` inches is expected to result in the removal of a total of `r round(params[["Nplot"]]$data$N[3], 2)` pounds (lbs) of nitrogen and `r round(params[["Pplot"]]$data$P[3], 2)` pounds (lbs) of phosphorus during the harvest period.   -->
+
 
 # **Federal Regulatory Nexus:**  
 Public Interest Factor(s): (1)Water Quality; (2)General Environmental Concerns; (3) Fish and wildlife values.  
