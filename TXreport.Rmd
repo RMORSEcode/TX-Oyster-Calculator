@@ -1,0 +1,179 @@
+---
+title: |
+  ![](noaa-emblem-rgb-sm2-2022.png){width=0.75in}
+  Texas Aquaculture Nutrient Removal Calculator
+output: pdf_document
+date: "`r format(Sys.Date(),'%B %e, %Y')`"
+params: 
+  Seed: NA
+  NurseryLocDiff: NA
+  table: 'NULL'
+  Nplot: 'NULL'
+  Pplot: 'NULL'
+  Farm: NA
+  Location: NA
+  Dates: NA
+  Units: NA 
+  gear: NA 
+  ploidy: NA
+  size: NA  
+  Number: NA
+  HLat: NA
+  HLon: NA
+---
+
+```{r, echo = F, warning=FALSE, echo=FALSE}
+library(knitr)
+opts_chunk$set(tidy.opts=list(width.cutoff=80),tidy=TRUE)
+```
+
+<!-- # ```{r, include=FALSE, echo=FALSE} -->
+<!-- # options(tinytex.verbose = TRUE) -->
+<!-- # ``` -->
+
+```{r setup, echo=FALSE}
+# A killPrefix hook.
+default_output_hook <- knitr::knit_hooks$get("output")
+knitr::knit_hooks$set( output = function(x, options) {
+  
+  comment <- knitr::opts_current$get("comment")
+  if( is.na(comment) ) comment <- ""
+  can_null <- grepl( paste0( comment, "\\s*\\[\\d?\\]" ),
+                     x, perl = TRUE)
+  do_null <- isTRUE( knitr::opts_current$get("null_prefix") )
+  if( can_null && do_null ) {
+    # By default R print output aligns at the left brace.
+    align_index <- regexpr( "\\]", x )[1] - 1
+    # Two cases: start or newline
+    re <- paste0( "^.{", align_index, "}\\]")
+    rep <- comment
+    x <- gsub( re, rep,  x )
+    re <- paste0( "\\\n.{", align_index, "}\\]")
+    rep <- paste0( "\n", comment )
+    x <- gsub( re, rep,  x )
+  }
+  default_output_hook( x, options )
+})
+
+knitr::opts_template$set("kill_prefix"=list(comment=NA, null_prefix=TRUE))
+```
+
+```{r, echo=FALSE}
+knitr::opts_chunk$set(opts.label="kill_prefix")
+```
+
+# **Calculator Inputs**  
+<!-- ### Universal Options ### -->
+**Name of the oyster farm:**  
+`r params[["Farm"]]`
+
+**Oyster ploidy:**  
+`r params[["ploidy"]]`
+
+<!-- ### Seed Only Options ### -->
+`r if(params[["Seed"]]==T) {"**Farm grows seed only (No Harvest):**  "}`
+`r if(params[["Seed"]]==T) {params[["Seed"]]}`  
+<!-- Name of waterbody-->
+`r if(params[["Seed"]]==T) {"**Name of the water body where the seed oysters were removed:**  "}`
+`r if(params[["Seed"]]==T) {params[["seedLocation"]]}`  
+<!-- Lat/Lon-->
+`r if(params[["Seed"]]==T) {"**Seed removal location (latitude, longitude):**  "}`  
+`r if(params[["Seed"]]==T) {c(params[["seedLat"]], params[["seedLon"]])}`  
+<!-- Seed size -->
+`r if(params[["Seed"]]==T) {"**Average size of oysters seed removed (mm):**  "}`
+`r if(params[["Seed"]]==T) {params[["seedsize"]]}`  
+<!-- Seed number -->
+`r if(params[["Seed"]]==T) {"**Total number of seed oysters removed:**  "}`
+`r if(params[["Seed"]]==T) {params[["seedNumber"]]}`  
+<!-- Removal Dates -->
+`r if(params[["Seed"]]==T) {"**Period of seed removal (YYYY-MM-DD begin, end):**  "}`
+`r  if(params[["Seed"]]==T) {params[["seedDates"]]}`
+<!-- ### Harvest Options ### -->
+
+<!-- Name of waterbody-->
+`r if(params[["Seed"]]==F) {"**Name of the water body where the oysters were harvested:**  "}`
+`r if(params[["Seed"]]==F) {params[["Location"]]}`  
+<!-- Lat/Lon-->
+`r if(params[["Seed"]]==F) {"**Harvest location (latitude, longitude):**  "}`  
+`r if(params[["Seed"]]==F) {c(params[["HLat"]], params[["HLon"]])}`  
+<!-- Nursery location options -->
+`r if(params[["NurseryLocDiff"]]==T) {"**Nursery location is seperate from harvest location:**  "}`
+`r if(params[["NurseryLocDiff"]]==T) {params[["NurseryLocDiff"]]}`  
+`r if(params[["NurseryLocDiff"]]==T) {"**Nursery location (latitude, longitude):**  "}`  
+`r if(params[["NurseryLocDiff"]]==T) {c(params[["nurseLat"]], params[["nurseLon"]])}`  
+<!-- Culture method -->
+`r if(params[["Seed"]]==F) {"**Culture method:**  "}`
+`r if(params[["Seed"]]==F) {params[["gear"]]}`  
+<!-- Harvest number -->
+`r if(params[["Seed"]]==F) {"**Total number of oysters harvested:**  "}`
+`r if(params[["Seed"]]==F) {params[["Number"]]}`  
+<!-- Harvest size -->
+`r if(params[["Seed"]]==F) {"**Average size of oysters at harvest (Inches):**  "}`
+`r if(params[["Seed"]]==F) {params[["size"]]}`  
+<!-- Harvest Dates -->
+`r if(params[["Seed"]]==F) {"**Period of harvest (YYYY-MM-DD begin, end):**  "}`
+`r  if(params[["Seed"]]==F) {params[["Dates"]]}`
+
+
+# **Calculated Farm Nutrient Removal**  
+```{r, tidy='styler', echo=FALSE}
+knitr::kable(params[["table"]], 
+             caption="Nitrogen and Phosphorus Removal")
+```
+
+```{r, fig.dim = c(3, 4), echo=FALSE}
+params[["Nplot"]]
+```
+
+```{r, fig.dim = c(3, 4), echo=FALSE}
+params[["Pplot"]]
+```
+
+<!-- If seed only, call file with summary text selected for seed -->
+```{r conditional_print, child='seedText.Rmd', eval = params[["Seed"]]}
+```
+
+<!-- If harvest, call file with summary text selected for harvest values -->
+```{r conditional_print, child='harvestText.Rmd', eval = params[["Seed"]]==F}
+```
+
+<!-- # **Summary**   -->
+<!-- Shellfish incorporate nutrients into their tissues and shell as they grow. At harvest, these nutrients are permanently removed from the coastal environment, providing a benefit to water quality in the form of excess nutrient reduction. The harvest of `r params[["Number"]]` oysters at an average size of `r  params[["size"]]` inches is expected to result in the removal of a total of `r round(params[["Nplot"]]$data$N[3], 2)` pounds (lbs) of nitrogen and `r round(params[["Pplot"]]$data$P[3], 2)` pounds (lbs) of phosphorus during the harvest period.   -->
+
+# **Federal Regulatory Nexus:**  
+Public Interest Factor(s): (1)Water Quality; (2)General Environmental Concerns; (3) Fish and wildlife values.  
+
+Rivers and Harbors Act Section 10 public interest review factors related to water quality, general environmental concerns and fish and wildlife values. Clean Water Act Section 303 provisions related to managing nutrient pollution in the Waters of the U.S.; Magnuson-Stevens Act provisions related to Essential Fish Habitat; The Fish and Wildlife Coordination Act provisions related to the development of measures to protect, develop, and improve wildlife and their habitat.  
+
+# **Data Contributors**  
+Galveston Bay: *Texas Sustainable Oysters*  
+Matagorda Bay: *Oyster Bros*  
+Copano Bay: *Big Tree Oyster Company*  
+Copano Bay: *Copano Oyster Company*  
+
+
+# **Supporting Literature**  
+- Bayer, S.R., Cubillo, A.M., Rose, J.M., Ferreira, J.G., Dixon, M., Alvarado, A., Barr, J., Bernatchez, G., Meseck, S., Poach, M., Pousse, E., Wikfors, G.H., & S. Bricker. (2024). Refining the Farm Aquaculture Resource Management Model for Shellfish Nitrogen Removal at the Local Scale. Estuaries and Coasts. doi 10.1007/s12237-024-01354-7"  
+- Cornwell, J., Rose, J., Kellogg, L., Luckenbach, M., Bricker, S., Paynter, K., Moore, C., Parker, M., Sanford, L., Wolinski, B., Lacatell, A., Fegley, L., and Hudson, K. (2016). "Panel Recommendations on the Oyster BMP Nutrient and Suspended Sediment Reduction Effectiveness Determination Decision Framework and Nitrogen and Phosphorus Assimilation in Oyster Tissue Reduction Effectiveness for Oyster Aquaculture Practices". (Report to the Chesapeake Bay Program.  Available online at http://www.chesapeakebay.net/documents/Oyster_BMP_1st_Report_Final_Approved_2016-12-19.pdf).  
+- Cornwell, J., S. Bricker, A. Lacatell, M. Luckenbach, F. Marenghi, C. Moore, M. Parker, K. Paynter, J. Rose, L. Sanford, W. Wolinski, O.N. Caretti, J. Reichert-Nguyen, & H.W. Slacum. 2023. Nitrogen and phosphorus reduction associated with harvest of hatchery-produced oysters and reef restoration: Assimilation and enhanced denitrification: Panel recommendations. Report submitted to the Chesapeake Bay Program Partnership Water Quality Goal Implementation Team January 27, 2023. (Report to the Chesapeake Bay Program.  Available online at https://d18lev1ok5leia.cloudfront.net/chesapeakebay/documents/Animal-Mortality-Mngmnt-Expert-Panel-Report-WQGIT-Approved.pdf).  
+- Grizzle, R.E., Ward, K.M., Peter, C.R., Cantwell, M., Katz, D., and Sullivan, J. (2017). Growth, morphometrics and nutrient content of farmed eastern oysters, Crassostrea virginica (Gmelin), in New Hampshire, USA. Aquaculture Research 48, 1525-1537.  
+- Higgins, C.B., Stephenson, K., and Brown, B.L. (2011). Nutrient bioassimilation capacity of aquacultured oysters: quantification of an ecosystem service. Journal of Environmental Quality 40, 271-277.  
+- Lindahl, O., Hart, R., Hernroth, B., Kollberg, S., Loo, L.-O., Olrog, L., Rehnstam-Holm, A.-S., Svensson, J., Svensson, S., and Syversen, U. (2005). Improving marine water quality by mussel farming - a profitable solution for Swedish society. Ambio 34, 129-136.  
+- Poach, M., Morse, R., Meseck, S.L., Alvarado, A., Reichert-Nguyen, J., McFarland, K., Elliott, H., Kellogg, M.L., Luckenbach, M.W., & J.M. Rose. (2024). Nutrient reduction by eastern oysters exhibits low variability associated with reproduction, ploidy, and farm location. Marine Pollution Bulletin 202, 116286. doi 10.1016/j.marpolbul.2024.116286"  
+- Reitsma, J., Murphy, D.C., Archer, A.F., and York, R.H. (2017). Nitrogen extraction potential of wild and cultured bivalves harvested from nearshore waters of Cape Cod, USA. Marine Pollution Bulletin 116, 175-181.  
+- Rose, J.M., Bricker, S.B., Tedesco, M.A., and Wikfors, G.H. (2014). A Role for Shellfish Aquaculture in Coastal Nitrogen Management. Environmental Science & Technology 48, 2519-2525.  
+- Rose, J.M., Morse, R.E., and C. Schillaci. (2024). Development and application of an online tool to quantify nitrogen removal associated with harvest of cultivated eastern oysters. PLoS ONE 19(9): e0310062.  
+- Sebastiano, D., Levinton, J.S., Doall, M., and Kamath, S. (2015). Using a Shellfish Harvest Strategy to Extract High Nitrogen Inputs in Urban and Suburban Coastal Bays: Practical and Economic Implications. Journal of Shellfish Research 34, 573-583, 511.  
+
+
+# **Disclaimer**  
+This is a scientific product and is not an official communication of the National Oceanic and Atmospheric Administration, or the United States Department of Commerce. All NOAA GitHub project code is provided on an ‘as is’ basis and the user assumes responsibility for its use. Any claims against the Department of Commerce or Department of Commerce bureaus stemming from the use of this GitHub project will be governed by all applicable Federal law. Any reference to specific commercial products, processes, or services by service mark, trademark, manufacturer, or otherwise, does not constitute or imply their endorsement, recommendation or favoring by the Department of Commerce. The Department of Commerce seal and logo, or the seal and logo of a DOC bureau, shall not be used in any manner to imply endorsement of any commercial product or activity by DOC or the United States Government.  
+
+
+# **Calculator Version:**  
+```{r, echo=FALSE}
+releases <- gh("GET /repos/{owner}/{repo}/releases", 
+               owner = "RMORSEcode",
+               repo = "TX-Oyster-Calculator")
+print(releases[[1]][["name"]])
+```
