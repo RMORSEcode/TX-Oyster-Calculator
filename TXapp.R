@@ -16,6 +16,11 @@ library(png)
 library(gridExtra)
 library(grid)
 library(bslib)
+library(maps)
+library(sf); sf_use_s2(FALSE)
+library(lwgeom)
+library(stringr)
+
 
 ui <- fluidPage(style = 'margin-left: 10%; margin-right: 10%;',
                 theme = bslib::bs_theme(bootswatch = "cerulean"),
@@ -50,9 +55,12 @@ ui <- fluidPage(style = 'margin-left: 10%; margin-right: 10%;',
                              textAreaInput("projloc", div(strong("Harvest Location Waterbody Name:"), " Please enter the name of the water body where the oysters were harvested from", em("(will not affect calculation)")), value = "", width ="100%", rows=1, placeholder = NULL),
                              helpText(h6("Harvest Location: "),"Please scroll or pinch to zoom to the harvest location, then click once on the marker pin and select the site to record the coordinates. To remove a marker, click on the trash icon and then the errant marker", style = "font-size:18px;"),
                              leafletOutput("mymap", width="100%", height=400),
-                             ## Location table
+                             ## Location Lat Long table
                              tableOutput('loctable'),
                              helpText(br()),
+                             ## Location county
+                             # tableOutput('county'),
+                             # helpText(br()),
                              ## Culture Method
                              selectInput("gear", div(strong("Culture Method:")," Select the gear type primarily used for growing oysters, or select 'On-Bottom' for no gear", em("(will not affect calculation)")),c("Floating", "Off-bottom", "On-Bottom", "Multiple methods used"), width="100%"),
                              helpText(br()),
@@ -285,6 +293,7 @@ ui <- fluidPage(style = 'margin-left: 10%; margin-right: 10%;',
 
 server <- function(input, output, session) {
   session$onSessionEnded(function() { stopApp() })
+  
   stations=readxl::read_xlsx("Location_data.xlsx",sheet='final2', range='A1:F34')
   # aquaculture=sf::st_read("C:/Users/ryan.morse/Documents/Aquaculture/Shellfish permitting and ecosystem services/Shellfish Calculators/Habitat/Marine Cadastre/Aquaculture.shp")
   # NESaquaculture=sf::st_crop(aquaculture, xmin=-77, ymin=35, xmax=-66.98481, ymax=60.83483) #xmin: -160.7436 ymin: 19.52108 xmax: -66.98481 ymax: 60.83483
@@ -296,6 +305,11 @@ server <- function(input, output, session) {
                    repo = "TX-Oyster-Calculator")
     releases[[1]][["name"]]
   })
+  
+  
+  ## get counties map
+  # counties_sf <- st_as_sf(maps::map("county", plot = FALSE, fill = TRUE))
+  
   
   ### add values for tissue/shell Nitrogen/Phosphorus north/south Diploid/Triploid
   ## South is for Copano and south, North is for Matagorda and North
@@ -340,11 +354,15 @@ server <- function(input, output, session) {
     feature <- input$mymap_draw_new_feature
     
     output$loctable <- renderTable(
-      data.frame("Lon"=feature$geometry$coordinates[[1]],"Lat"=feature$geometry$coordinates[[2]]),
+      data.frame("Lon"=feature$geometry$coordinates[[1]],
+                 "Lat"=feature$geometry$coordinates[[2]], 
+                 "County"=str_to_sentence(str_split(counties_sf$ID[nearest_idx], ",")[[1]][2])
+),
       striped = T,
       hover = F,
       bordered = T,
-      spacing = c("s", "xs", "m", "l"),
+      # spacing = c("s", "xs", "m", "l"),
+      spacing = c("m"),
       width = "auto",
       align = NULL,
       rownames = FALSE,
@@ -353,6 +371,28 @@ server <- function(input, output, session) {
       na = "NA",
       quoted = FALSE
     )
+    
+    ## get county from location
+    counties_sf <- st_as_sf(maps::map("county", plot = FALSE, fill = TRUE))
+    points_df=data.frame(
+      lon = feature$geometry$coordinates[[1]],
+      lat = feature$geometry$coordinates[[2]])
+    points_sf <- st_as_sf(points_df, coords = c("lon", "lat"), crs = 4326)
+    points_sf <- st_transform(points_sf, st_crs(counties_sf))
+    nearest_idx = st_nearest_feature(points_sf, counties_sf, longlat = T)
+    # counties_sf$ID[nearest_idx]
+    # counties_sf$is_highlighted=F
+    # counties_sf$is_highlighted[nearest_idx]=T
+    distances <- st_distance(points_sf, counties_sf[nearest_idx, ], by_element = TRUE)
+    points_sf$nearest_poly_id <- nearest_idx
+    points_sf$distance_to_poly <- distances
+    
+    ## output (included in loctable)
+    # output$county <- renderTable(
+    #   data.frame("County"=str_to_sentence(str_split(counties_sf$ID[nearest_idx], ",")[[1]][2]))
+    # )
+    
+    
   })
   
   
@@ -763,7 +803,7 @@ server <- function(input, output, session) {
       req(input$HNum)
       req(input$mymap_draw_new_feature)
       table1()
-   },rownames = TRUE)
+    },rownames = TRUE)
   
   output$mytable2 <-
     renderTable({
