@@ -151,11 +151,20 @@ ui <- fluidPage(style = 'margin-left: 10%; margin-right: 10%;',
                              ### add text box with black border ### "border-style: solid; border-color: gray; background-color: #838B8B;"
                              div( style = "border-style: solid; border-radius: 5px; border-color: #0085CA; background-color: #0085CA;",
                                   p("The Reverse Calculator predicts the number of eastern oysters needed to harvest in order to offset a specified nitrogen load at a farm located within the state waters of Texas, USA.", style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px; color: white;"),
-                                  p("To use the tool, please enter a nitrogen load and the average size of oyters at harvest.", style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px; color: white;")),
+                                  p("To use the tool, please choose: ", style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px; color: white;"),
+                                  p(em("- A waterbody location either North or South of latitude 28.2 (~ Copano Bay)"), style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px; color: white;"),
+                                  p(em("- Oyster ploidy (diploid or triploid)"),style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px; color: white;"),
+                                  p(em("- The nitrogen load to offset"), style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px; color: white;"),
+                                  p(em("- The average size of oyters at harvest"), style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px; color: white;")),
                              # p("To download a report, click on ",strong("Generate PDF Report")," at the bottom", style="text-align:justify; padding-left:10px; padding-right:10px; font-size:15px;")),
                              helpText(br()),
                              helpText(br()),
                              helpText(h3("Harvest Estimator For Nitrogen (N) Load Removal")),
+                             helpText(br()),
+                             tags$img(src='N_S.png', width = "100%", alt="Image showing a map of Texas with the location of Galveston, Matagorda, and Copano Bays with a horizontal line diving the state into North and South regions based on nitrogen content in oysters."),
+                             selectInput("wlocat", strong("Waterbody location - North or South of latitude 28.2 degrees"), c('North', 'South')),
+                             helpText(br()),
+                             selectInput("Sploidy", strong("Oyster ploidy:"), c('Diploid', 'Triploid')),
                              numericInput("Nload", strong("Nitrogen load into waterbody (lbs N)"), 0, min=0, max=NA, width="100%"),
                              helpText(br()),
                              sliderInput(
@@ -190,10 +199,11 @@ ui <- fluidPage(style = 'margin-left: 10%; margin-right: 10%;',
                                   p("The Texas Oyster Nutrient Removal Calculator can be used for new permit applications based on estimated production value, or to provide information on existing farms from actual harvest numbers. The grower provides information on:", style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px; color: white;"),
                                   p(strong("- Number of oysters harvested or to be harvested"), style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px; color: white;"),
                                   p(strong("- Size of oysters at harvest"), style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px; color: white;"),
+                                  p(strong("- Ploidy (diploid or triploid)"), style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px; color: white;"),
+                                  p(strong("- Farm location"), style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px; color: white;"),
                                   p("- Culture method (floating gear vs. off-bottom gear vs. on-bottom)*", style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px; color: white;"),
-                                  p("- Ploidy (diploid, triploid, or a combination)*", style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px; color: white;"),
-                                  p("- Farm location and period of harvest (1 day to 5 years) will be included as inputs for use in generating the report, but will not affect the calculation.", style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px; color: white;"),
-                                  p(em("*We are actively seeking feedback from the aquaculture community on the inclusion of these factors, given the small effect that they had in our data analysis."), style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px; color: white;")),
+                                  p("- Period of harvest (1 day to 5 years)*", style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px; color: white;"),
+                                  p(em("*Culture method and period of harvest will be included as inputs for use in generating the report, but will not affect the calculation."), style="text-align:justify; padding-left:10px; padding-right:10px; font-size:18px; color: white;")),
                              helpText(br()),
                              tags$p(
                                h4("Background"),
@@ -233,12 +243,12 @@ ui <- fluidPage(style = 'margin-left: 10%; margin-right: 10%;',
                              br(),
                              tags$p(
                                h4("Project Team"),
+                               tags$a(target="_blank", href="https://www.fisheries.noaa.gov/contact/ryan-morse-phd","Ryan Morse,"),
                                tags$a(target="_blank", href="https://www.harteresearch.org/people/jennifer-pollack", "Jennifer Pollack,"),
                                # tags$a(target="_blank", href="https://www.linkedin.com/in/julie-m-rose/", "Julie Rose,"),
                                # tags$a(target="_blank", href="https://www.linkedin.com/in/chris-schillaci/", "Chris Schillaci,"),
                                tags$a(target="_blank", href="https://oyster.texasseagrant.org/", "Mario Marquez,"),
-                               tags$a(target="_blank", href="https://www.fisheries.noaa.gov/contact/ryan-morse-phd","Ryan Morse"),
-                               tags$a(target="_blank", href="https://www.harteresearch.org/people/geret-depiper", "Geret DePiper"),
+                               tags$a(target="_blank", href="https://www.harteresearch.org/people/geret-depiper", "Geret DePiper,"),
                                tags$a(target="_blank", href="https://www.harteresearch.org/people/michael-wetz", "Michael Wetz"),
                              ),
                              div( style = "border-style: solid; border-radius: 10px; border-color: #0085CA; background-color: #0085CA;",
@@ -516,18 +526,33 @@ server <- function(input, output, session) {
     #Convert dry weight of tissue and shell (g) to nutrients (g)
     tNi=reactiveValues()
     sNi=reactiveValues()
-    # tNi=0.0619*tdw
-    # sNi=0.0018*sdw
-    if(input$ploidy=="Diploid"){
-      tNi=0.0683*tdw
-      sNi=0.0017*sdw
+    # if(input$ploidy=="Diploid"){
+    #   tNi=0.0683*tdw
+    #   sNi=0.0017*sdw
+    # }
+    # else if(input$ploidy=="Triploid"){
+    #   tNi=0.0563*tdw
+    #   sNi=0.0018*sdw
+    # }
+    if(input$wlocat=="North"){
+    # if(input$mymap_draw_new_feature$geometry$coordinates[[2]] >= 28.1){
+      if(input$Sploidy=="Diploid"){
+        tNi=tNnD*tdw
+        sNi=sNnD*sdw
+      } else{
+        tNi=tNnT*tdw
+        sNi=sNnT*sdw
+      }
+    } else{
+      if(input$Sploidy=="Diploid"){
+        tNi=tNsD*tdw
+        sNi=sNsD*sdw
+      } else{
+        tNi=tNsT*tdw
+        sNi=sNsT*sdw
+      }
     }
-    else if(input$ploidy=="Triploid"){
-      tNi=0.0563*tdw
-      sNi=0.0018*sdw
-    }
-    
-    
+
     #convert grams N to lbs
     cnvrt=0.00220462
     # tN=reactiveValues()
