@@ -53,7 +53,7 @@ ui <- fluidPage(style = 'margin-left: 10%; margin-right: 10%;',
                              helpText(h3("2) Oyster Removal Details")),
                              helpText(br()),
                              textAreaInput("projloc", div(strong("Harvest Location Waterbody Name:"), " Please enter the name of the water body where the oysters were harvested from", em("(will not affect calculation)")), value = "", width ="100%", rows=1, placeholder = NULL),
-                             helpText(h6("Harvest Location: "),"Please scroll or pinch to zoom to the harvest location, then click once on the marker pin and select the site to record the coordinates. To remove a marker, click on the trash icon and then the errant marker", style = "font-size:18px;"),
+                             helpText(h5("Harvest Location: "),"Please scroll or pinch to zoom to the harvest location, then click once on the marker pin and select the site to record the coordinates. To remove a marker, click on the trash icon and then the errant marker", style = "font-size:18px;"),
                              leafletOutput("mymap", width="100%", height=400),
                              ## Location Lat Long table
                              tableOutput('loctable'),
@@ -122,6 +122,10 @@ ui <- fluidPage(style = 'margin-left: 10%; margin-right: 10%;',
                                )
                              ),
                              tableOutput("mytable"),
+                             br(),
+                             helpText(h5("N Removal Valuation: "),"Estimated value range of N removal in US dollars (USD):", style = "font-size:18px;"),
+                             # tags$p("Estimated value range of N removal in US dollars (USD):"),
+                             tableOutput("costtable"),
                              br(),
                              downloadButton(
                                outputId = "downloader",
@@ -222,7 +226,6 @@ ui <- fluidPage(style = 'margin-left: 10%; margin-right: 10%;',
                                         "(Rose et al. 2024)."),
                                  " Variability in oyster tissue and shell nutrient concentration was low, and an assessment of farm location, ploidy, and cultivation practice (with vs. without gear) suggested that a single average value could reasonably be applied across all farms."
                                ),
-                               
                              ),
                              # h6(tags$a(target="_blank", href="",
                              #           "Access publicly available data used to create this tool >")
@@ -320,6 +323,13 @@ server <- function(input, output, session) {
   ## get counties map
   # counties_sf <- st_as_sf(maps::map("county", plot = FALSE, fill = TRUE))
   
+  # N price per pound	removed value based on penalty assessment (USD)
+  NUSD.20=2.21
+  NUSD.50=8.84
+  NUSD.80=20.4
+  N.Counties=c('Anderson', 'Aransas', 'Brazoria', 'Calhoun', 'Cameron', 'Chambers', 'Fort Bend', 'Galveston',
+            'Harris', 'Hidalgo', 'Jackson', 'Jefferson', 'Kenedy', 'Kleberg', 'LIberty', 'Matagorda', 'Nueces', 'Orange',
+            'Refugio', 'San Patricio', 'Victoria', 'Willacy', 'Wharton')
   
   ### add values for tissue/shell Nitrogen/Phosphorus north/south Diploid/Triploid
   ## South is for Copano and south, North is for Matagorda and North
@@ -384,24 +394,28 @@ server <- function(input, output, session) {
     
     ## get county from location
     counties_sf <- st_as_sf(maps::map("county", plot = FALSE, fill = TRUE))
+    features_projected <- st_transform(counties_sf, 3857)
     points_df=data.frame(
       lon = feature$geometry$coordinates[[1]],
       lat = feature$geometry$coordinates[[2]])
     points_sf <- st_as_sf(points_df, coords = c("lon", "lat"), crs = 4326)
-    points_sf <- st_transform(points_sf, st_crs(counties_sf))
-    nearest_idx = st_nearest_feature(points_sf, counties_sf, longlat = T)
+    # points_sf2 <- st_transform(points_sf, st_crs(counties_sf))
+    points_sf2 <- st_transform(points_sf, 3857)
+    nearest_idx = st_nearest_feature(points_sf2, features_projected)
+    # nearest_idx = st_nearest_feature(points_sf2, counties_sf, longlat = T)
+    
     # counties_sf$ID[nearest_idx]
     # counties_sf$is_highlighted=F
     # counties_sf$is_highlighted[nearest_idx]=T
-    distances <- st_distance(points_sf, counties_sf[nearest_idx, ], by_element = TRUE)
-    points_sf$nearest_poly_id <- nearest_idx
-    points_sf$distance_to_poly <- distances
+    # distances <- st_distance(points_sf, counties_sf[nearest_idx, ], by_element = TRUE)
+    distances <- st_distance(points_sf2, features_projected[nearest_idx, ], by_element = TRUE)
+    points_sf2$nearest_poly_id <- nearest_idx
+    points_sf2$distance_to_poly <- distances
     
     ## output (included in loctable)
     # output$county <- renderTable(
     #   data.frame("County"=str_to_sentence(str_split(counties_sf$ID[nearest_idx], ",")[[1]][2]))
     # )
-    
     
   })
   
@@ -468,6 +482,9 @@ server <- function(input, output, session) {
       }
     }
     
+    # tableUSD <- reactive({
+    #   dfUSD <- table1()
+      
     
     # if(input$ploidy=="Diploid"){
     #   tNi1=0.0683*tdw1
@@ -829,6 +846,21 @@ server <- function(input, output, session) {
       req(input$mymap_draw_new_feature)
       table1()
     },rownames = TRUE)
+  
+  output$costtable <-
+    renderTable({
+      req(input$HNum)
+      req(input$mymap_draw_new_feature)
+      dfn=table1()
+      data.frame(
+        Low=dfn$Total[1] * NUSD.20,
+        Med=dfn$Total[1] * NUSD.50,
+        High=dfn$Total[1] * NUSD.80,
+        Units='US Dollars',
+        row.names = '$'
+      )
+    },rownames = TRUE)
+
   
   output$mytable2 <-
     renderTable({
