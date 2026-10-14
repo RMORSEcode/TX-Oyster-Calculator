@@ -751,9 +751,9 @@ server <- function(input, output, session) {
   }
   
   ## QR code
-  # ANRC=qrcode::qr_code('https://connect.fisheries.noaa.gov/ANRC/')
-  # png("linkQR.png") 
-  # plot(ANRC) 
+  # TX=qrcode::qr_code('https://connect.fisheries.noaa.gov/TX-ANRC/')
+  # png("linkQR.png")
+  # plot(TX)
   # dev.off()
   
   infoplot <- function(){
@@ -813,7 +813,7 @@ server <- function(input, output, session) {
     text(.6,.30, "sq. ft. of land fertilized**",cex=1.1, col='yellow', pos=4) 
     text(0,.050, "* Based on fertilizer with 10% nitrogen content", cex=0.65, col='yellow', pos=4)
     text(0,.025, "** Using 1-lb of nitrogen per 1000 sq. ft.", cex=0.65, col='yellow', pos=4)
-    text(0.5,0.95,"https://connect.fisheries.noaa.gov/ANRC/", cex=0.75, col='blue', pos=4)
+    text(0.45,0.95,"https://connect.fisheries.noaa.gov/TX-ANRC/", cex=0.75, col='blue', pos=4)
     mtext(input$farmname, side=3, line=-1, outer=T, cex=ifelse(nchar(input$farmname)<40,1.3,1), font=2, col='black') #FF9900 #3399FF #003366 #003399
     rasterImage(QR1,0.85,0.7,1,0.9)
     Z
